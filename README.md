@@ -20,18 +20,23 @@ Let's setup a local reverse proxy that does name-based virtual hosting, routing 
 
 1. Open <http://localhost:8888>
     * the [Traefik dashboard](https://doc.traefik.io/traefik/operations/dashboard/) will open
+    ![](traefik-dashboard.png)
     * all routes that were discovered show up --> <http://localhost:8888/dashboard/#/http/routers>
+    * the example service with its instances and the designated route shows up on the service page
+    ![](traefik-example-services.png)
 
 2. Open one of the container`s routes
     * <http://example.localhost.direct>
         * the browser will be redirected to <https://example.localhost.direct>
         * the tls certificate shows up left to the browser address bar as being valid (with a non-red/non-broken lock symbol</i> lock symbol
 
-and also then:
+then observe the results :
 
-3. Open one of the container`s routes
+3. Open the example application container`s routes
     * <https://example.localhost.direct>
       * the tls certificate shows up left to the browser address bar as being valid (with a non-red/non-broken <i class='fas fa-lock'> </i> lock symbol
+      * with each refresh of the url the traefik will show another container hostname and internal ip
+      ![](example-toggle.png)
 
 ## What is happening
 
