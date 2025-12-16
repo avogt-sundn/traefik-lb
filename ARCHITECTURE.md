@@ -22,10 +22,46 @@ The diagram illustrates a web application architecture:
 
 1. Backend containers can be scaled transparently.
 
-### Details
+### How to achieve these goals
 
 1. Backend containers are discovered as upstreams automatically by Traefik with its Docker provider listening on the Docker socket.
 
+1. CORS headers are not necessary when no cross site domains are in use.
+
+#### How CORS works
+
+CORS is strict, deterministic, and enforced by the browser. There is no flexibility or inference based on “same company” or DNS hierarchy.
+- portal.example.com → api.example.com are different origins.
+- Origin = scheme + host + port. Subdomains do not collapse.
+
+Implication for Angular:
+- Angular code loaded from https://portal.example.com
+- Calling https://api.example.com
+- Browser sends Origin: https://portal.example.com
+- API must explicitly allow this origin via CORS headers.
+```mermaid
+sequenceDiagram
+    participant Browser as Browser (Angular App)
+    participant Portal as https://portal.example.com
+    participant API as https://api.example.com
+
+    Browser->>Portal: GET / (Angular app)
+    Portal-->>Browser: HTML / JS loaded
+
+    Browser->>API: XHR / Fetch request
+    Note over Browser,API: Origin header sent:\nOrigin: https://portal.example.com
+
+    alt CORS not allowed
+        API-->>Browser: Response without CORS headers
+        Browser-->>Browser: Request blocked by CORS policy
+    else CORS allowed
+        API-->>Browser: Response with Access-Control-Allow-Origin: https://portal.example.com
+        Browser-->>Browser: Response accepted and processed
+    end
+
+```
+
+#### Traefik as gateway
 
 ```mermaid
 flowchart TB
