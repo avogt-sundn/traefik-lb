@@ -1,6 +1,8 @@
 services:
   traefik:
-    image: avogt/traefik-with-localhost-tls:2.11
+    image: traefik-custom:v2.11
+    build:
+      context: dockerbuild
     command:
       - --providers.file.filename=/traefik_conf.yml
       - --entrypoints.web.address=:80
@@ -14,7 +16,6 @@ services:
       - --api
       - --api.insecure=true
       - --api.dashboard=true
-
     ports:
       - "80:80"
       - "443:443"
@@ -24,7 +25,30 @@ services:
     networks:
       - internal
       - default
-
+  standby:
+    image: traefik-custom:v2.11
+    command:
+      - --providers.file.filename=/traefik_conf.yml
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls=true
+      - --providers.docker=true
+      - --providers.docker.watch=true
+      - --providers.docker.exposedbydefault=false
+      - --api
+      - --api.insecure=true
+      - --api.dashboard=true
+    ports:
+      - "81:80"
+      - "444:443"
+      - "8889:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - internal
+      - default
   web:
     image: traefik/whoami
     labels:
@@ -34,6 +58,7 @@ services:
       - "traefik.http.services.web.loadbalancer.server.port=443"
       - "traefik.http.services.web.loadbalancer.server.scheme=https" # Use HTTPS for upstream
       - "traefik.http.services.web.loadbalancer.sticky.cookie=false"
+
     networks:
       - internal
     deploy:
