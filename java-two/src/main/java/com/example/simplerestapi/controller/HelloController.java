@@ -18,7 +18,7 @@ import com.example.simplerestapi.service.GreetingService;
 import jakarta.annotation.security.RolesAllowed;
 
 @RestController
-@RequestMapping("/api/java-two")
+@RequestMapping("/api/two")
 public class HelloController {
 
     private final GreetingService greetingService;

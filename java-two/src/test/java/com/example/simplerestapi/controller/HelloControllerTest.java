@@ -38,7 +38,7 @@ public class HelloControllerTest {
     void sayHello() throws Exception {
 
         mockMvc
-                .perform(get("/api/java-two/hello")
+                .perform(get("/api/two/hello")
                         .with(user("testuser").roles("USER")))
                 .andExpect(status().isOk());
     }
@@ -46,7 +46,7 @@ public class HelloControllerTest {
     @Test
     void greetUser() throws Exception {
         mockMvc
-                .perform(post("/api/java-two/greet")
+                .perform(post("/api/two/greet")
                         .with(user("testuser").roles("USER"))
                         .with(csrf())
                         .contentType(MediaType.TEXT_PLAIN)
@@ -62,7 +62,7 @@ public class HelloControllerTest {
 
         this.name = "Time:" + Date.from(Instant.now());
         greetUser();
-        mockMvc.perform(get("/api/java-two/greetings")
+        mockMvc.perform(get("/api/two/greetings")
                 .with(user("testuser").roles("USER"))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
