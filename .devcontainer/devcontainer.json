@@ -32,8 +32,7 @@
   "containerEnv": {
     "DOCKER_NETWORK": "docker-default-network",
     "DB_HOST": "postgres",
-    "OTEL_HOST": "grafana-otel-lgtm"
-  },
+    "OTEL_HOST": "grafana-otel-lgtm" },
   // Use 'initializeCommand' to run commands on the host before container gets created.
   "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
   "runArgs": [
