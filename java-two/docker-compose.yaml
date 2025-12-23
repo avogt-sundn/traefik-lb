@@ -16,7 +16,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 1s
       timeout: 5s
-      retries: 5
+      retries: 3
 
   app-two:
     build:
@@ -31,15 +31,15 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 3s
+      interval: 1s
       timeout: 5s
-      retries: 2
+      retries: 3
     links:
       - "postgres-two:postgres"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-two.rule=PathPrefix(`/api/two`)"
-      - "traefik.http.routers.app-two.entrypoints=web,websecure"
+      - "traefik.http.routers.app-two.entrypoints=web"
       - "traefik.http.services.app-two.loadbalancer.server.port=8080"
 #      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
       - "traefik.http.services.app-two.loadbalancer.sticky.cookie=false"

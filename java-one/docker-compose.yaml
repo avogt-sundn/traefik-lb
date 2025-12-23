@@ -24,11 +24,20 @@ services:
     depends_on:
       postgres-one:
         condition: service_healthy
-      app-two:
-        condition: service_healthy
+#      app-two:
+#        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/greetingdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
     links:
       - "postgres-one:postgres"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-one.rule=PathPrefix(`/api/one`)"
+      - "traefik.http.routers.app-one.entrypoints=web,websecure"
+      - "traefik.http.services.app-one.loadbalancer.server.port=8080"
+#      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
+      - "traefik.http.services.app-one.loadbalancer.sticky.cookie=false"
+
+

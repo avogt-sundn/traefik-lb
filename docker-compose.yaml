@@ -11,8 +11,8 @@ services:
     command:
       - --providers.file.filename=/traefik_conf.yml
       - --entrypoints.web.address=:80
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+#      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+#      - --entrypoints.web.http.redirections.entryPoint.scheme=https
       - --entrypoints.websecure.address=:443
       - --entrypoints.websecure.http.tls=true
       - --providers.docker=true
@@ -35,8 +35,8 @@ services:
     command:
       - --providers.file.filename=/traefik_conf.yml
       - --entrypoints.web.address=:80
-#      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-#      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
       - --entrypoints.websecure.address=:443
       - --entrypoints.websecure.http.tls=true
       - --providers.docker=true
@@ -59,10 +59,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`example.localhost.direct`)"
-      - "traefik.http.routers.web.entrypoints=web,websecure"
+      - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.services.web.loadbalancer.server.port=443"
       - "traefik.http.services.web.loadbalancer.server.scheme=https" # Use HTTPS for upstream
       - "traefik.http.services.web.loadbalancer.sticky.cookie=false"
+
     networks:
       - internal
     deploy:
