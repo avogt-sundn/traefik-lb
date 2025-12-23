@@ -5,20 +5,50 @@
 
 app-two:8080/api/api-two/greet
 
-### Testing with curl
+## Inner loop
 
-```sh
-curl app-two:8080/api/two/greet -H "Content-Type: text/plain" -d 'Armin'
-# {"id":1,"name":"Armin","message":"Hello, Armin!"}%
-````
+- start the postgres database as docker container:
 
-### Building and running as container and testing
+    ```sh
+    docker compose \
+        -f /workspaces/traefik-lb/java-two/docker-compose.yaml \
+        up -d  postgres
+    ```
 
-```sh
-docker compose \
-    -f /workspaces/traefik-lb/java-two/docker-compose.yaml \
-    up -d --build
-```
+- select the right postgres instance by setting the environment variable `DB_HOST`, then run Spring with Maven:
+
+
+    ```sh
+    DB_HOST=postgres-two \
+        mvn spring-boot:run
+    ```
+
+- test it with curl
+
+    ```sh
+    curl localhost:8080/api/two/greet -H "Content-Type: text/plain" -d 'Armin'
+    #{"id":4,"name":"Armin","message":"Hello, Armin!"}%
+    ```
+## Outer loop
+
+ - building and running as container and testing
+
+    ```sh
+    # cleanup
+    docker compose \
+        -f /workspaces/traefik-lb/java-two/docker-compose.yaml \
+        down --remove-orphans
+    # start
+    docker compose \
+        -f /workspaces/traefik-lb/java-two/docker-compose.yaml \
+        up -d --build
+    ```
+ - test
+
+    ```sh
+    curl app-two:8080/api/two/greet -H "Content-Type: text/plain" -d 'Armin'
+    # {"id":1,"name":"Armin","message":"Hello, Armin!"}%
+    ````
 
 ## Simple Spring Boot REST API
 

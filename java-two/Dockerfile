@@ -21,5 +21,6 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose application port (adjust if your app uses a different one)
 EXPOSE 8080
 
+RUN apk update && apk add curl && apk upgrade
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
