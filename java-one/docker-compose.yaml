@@ -6,7 +6,7 @@ networks:
   backend:
 
 services:
-  postgres-two:
+  postgres-one:
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: postgres
@@ -18,12 +18,12 @@ services:
       timeout: 5s
       retries: 5
 
-  app-two:
+  app-one:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      postgres-two:
+      postgres-one:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/greetingdb
@@ -31,7 +31,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     links:
       - "postgres-one:postgres"
-
 
 volumes:
   postgres_data:

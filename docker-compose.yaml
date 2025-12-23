@@ -1,5 +1,10 @@
+
+include:
+  - java-one/docker-compose.yaml
+  - java-two/docker-compose.yaml
+
 services:
-  traefik:
+  gateway:
     image: traefik-custom:v2.11
     build:
       context: dockerbuild
