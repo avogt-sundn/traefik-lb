@@ -2,6 +2,14 @@
 
 Let's setup a local reverse proxy that does name-based virtual hosting, routing to docker containers and provides valid TLS out-of-the-box.
 
+Development helper
+------------------
+After rebuilding or reopening the devcontainer the project installs a small helper script `dps` into `/usr/local/bin` that prints running containers with hostname, mapped ports and container name in a compact table. To enable it rebuild the container (Command Palette → Dev Containers: Rebuild Container) and run:
+
+```bash
+dps
+```
+
 > Many thanks go to <https://get.localhost.direct/> for having registered the DNS wildcard and providing the matching TLS certificate on `*.localhost.direct`.
 >
 > Read their story over here <https://get.localhost.direct/> ..
