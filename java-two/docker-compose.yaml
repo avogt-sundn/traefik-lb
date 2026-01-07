@@ -25,17 +25,11 @@ services:
     depends_on:
       postgres-two:
         condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/app-two-db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 1s
       timeout: 5s
       retries: 3
-    links:
-      - "postgres-two:postgres"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-two.rule=PathPrefix(`/api/two`)"

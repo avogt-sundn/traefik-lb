@@ -26,12 +26,6 @@ services:
         condition: service_healthy
 #      app-two:
 #        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/app-one-db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-    links:
-      - "postgres-one:postgres"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-one.rule=PathPrefix(`/api/one`)"
