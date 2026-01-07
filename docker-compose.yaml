@@ -4,6 +4,20 @@ include:
   - java-two/docker-compose.yaml
 
 services:
+  foward:
+    image: forward:latest
+    build:
+      context: tcp-forwarder
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-two.rule=PathPrefix(`/api/two`)"
+      - "traefik.http.routers.forward-two.entrypoints=web"
+      - "traefik.http.services.forward-two.loadbalancer.server.port=8080"
+#      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
+      - "traefik.http.services.forward-two.loadbalancer.sticky.cookie=false"
+    environment:
+      - TARGET_HOST=traefik-lb
+
   gateway:
     image: traefik-custom:v2.11
     build:

@@ -15,12 +15,3 @@ RUN apt-get update && apt-get install -y iputils-ping dnsutils file apache2-util
 # BEGIN plantuml extension
 RUN apt-get update && apt-get install -y graphviz
 # END   plantuml extension
-
-
-LABEL traefik.enable="true" \
-    traefik.http.services.vscode-service.loadbalancer.server.port="8080" \
-    traefik.http.routers.vscode-service.rule="Host(`vscode.localhost.direct`)" \
-    traefik.http.routers.vscode-service.entrypoints="websecure" \
-    traefik.http.routers.vscode-service.middlewares="cors" \
-    traefik.http.middlewares.cors.headers.accessControlAllowOriginList=* \
-    traefik.http.middlewares.cors.headers.accessControlAllowHeaders=content-type
