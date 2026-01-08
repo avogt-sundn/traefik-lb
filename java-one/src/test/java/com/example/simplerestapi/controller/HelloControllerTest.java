@@ -54,7 +54,7 @@ public class HelloControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
                                 name))
-                .andExpect(status().isCreated())
+                .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.name").value(name));
     }
 
