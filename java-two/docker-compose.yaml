@@ -33,7 +33,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-two.rule=PathPrefix(`/api/two`)"
-      - "traefik.http.routers.app-two.entrypoints=web"
+      - "traefik.http.routers.app-two.entrypoints=web,websecure"
       - "traefik.http.services.app-two.loadbalancer.server.port=8080"
 #      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
       - "traefik.http.services.app-two.loadbalancer.sticky.cookie=false"

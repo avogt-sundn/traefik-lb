@@ -19,8 +19,7 @@ app-two:8080/api/api-two/greet
 
 
     ```sh
-    DB_HOST=postgres-two \
-        mvn spring-boot:run
+    mvn spring-boot:run
     ```
 
 - test it with curl
@@ -43,7 +42,7 @@ app-two:8080/api/api-two/greet
         -f /workspaces/traefik-lb/java-two/docker-compose.yaml \
         up -d --build
     ```
- - test
+ - test im devcontainer
 
     ```sh
     curl app-two:8080/api/two/greet -H "Content-Type: text/plain" -d 'Armin'
