@@ -24,6 +24,12 @@ services:
     depends_on:
       postgres-one:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+
 #      app-two:
 #        condition: service_healthy
     labels:
