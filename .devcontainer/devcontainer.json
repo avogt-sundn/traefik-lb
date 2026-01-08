@@ -28,10 +28,10 @@
   "mounts": [
     "source=localcache,target=/home/vscode/.m2,type=volume"
   ],
-  "postCreateCommand": "sudo chown -R vscode.vscode /home/vscode/.m2;mkdir -p /home/vscode/.redhat/; echo '{\"disabled\":true}' > /home/vscode/.redhat/io.quarkus.analytics.localconfig",
+"postCreateCommand": "sudo chown -R vscode.vscode /home/vscode/.m2;mkdir -p /home/vscode/.redhat/; echo '{\"disabled\":true}' > /home/vscode/.redhat/io.quarkus.analytics.localconfig;echo \"export PATH='$PATH':/workspaces/${localWorkspaceFolderBasename}/.devcontainer/scripts\" >> /home/vscode/.zshrc",
   "containerEnv": {
     "DOCKER_NETWORK": "docker-default-network",
-    "DB_HOST": "postgres",
+//    "DB_HOST": "postgres",
     "OTEL_HOST": "grafana-otel-lgtm" },
   // Use 'initializeCommand' to run commands on the host before container gets created.
   "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
