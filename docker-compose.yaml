@@ -21,12 +21,26 @@ services:
       - TARGET_HOST=traefik-lb
       - TARGET_PORT=8080
 
+
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy
+    container_name: socket-proxy
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      CONTAINERS: 1
+    networks:
+      - proxy
+
   gateway:
     image: traefik-custom:v2.11
     build:
       context: dockerbuild
     command:
       - --providers.file.filename=/traefik_conf.yml
+      - --providers.docker.endpoint=tcp://socket-proxy:2375
       - --entrypoints.web.address=:80
 #      - --entrypoints.web.http.redirections.entryPoint.to=websecure
 #      - --entrypoints.web.http.redirections.entryPoint.scheme=https
@@ -42,11 +56,11 @@ services:
       - "80:80"
       - "443:443"
       - "8888:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - internal
       - default
+      - proxy
+
   standby:
     image: traefik-custom:v2.11
     command:
@@ -89,7 +103,7 @@ services:
 networks:
   internal:
     driver: bridge
-
+  proxy:
   default:
     name: docker-default-network
     external: true
