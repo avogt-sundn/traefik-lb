@@ -54,3 +54,25 @@ The test code boots a Spring container and runs the test code calling the app-on
     ],
 
     ```
+  
+
+# Test it works
+
+Open a terminal in the IDE that runs the devcontainer.
+
+- only in the devcontainer the hostname `gateway`will be resolved!
+
+    ```sh
+    cd traefik-lb
+    docker compose up -d 
+    docker compose down app-two
+    # stop the containerized app-two
+    docker compose up -d forward
+    # starts the container that has the labels for traefik
+    cd java-two
+    mvn spring-boot:run
+    # since mvn blocks, do open a new terminal 
+    curl gateway/api/two/greet -H "Content-Type: text/plain" -d 'Armin'
+    # {"id":1,"name":"Armin","message":"Hello, Armin!"}%
+    ````
+
