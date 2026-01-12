@@ -15,3 +15,5 @@ RUN apt-get update && apt-get install -y iputils-ping dnsutils file apache2-util
 # BEGIN plantuml extension
 RUN apt-get update && apt-get install -y graphviz
 # END   plantuml extension
+
+USER vscode
