@@ -36,9 +36,8 @@ services:
       - "traefik.http.routers.app-two.entrypoints=web,websecure"
       - "traefik.http.services.app-two.loadbalancer.server.port=8080"
 #      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
-      - "traefik.http.services.app-two.loadbalancer.sticky.cookie=false"
-
-
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.port=8080"
 
 volumes:
   postgres_data:

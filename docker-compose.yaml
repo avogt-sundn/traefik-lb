@@ -15,6 +15,9 @@ services:
       - "traefik.http.routers.forward-two.rule=PathPrefix(`/api/two`)"
       - "traefik.http.routers.forward-two.entrypoints=web"
       - "traefik.http.services.forward-two.loadbalancer.server.port=80"
+      - "traefik.http.services.forward-two.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.forward-two.loadbalancer.healthcheck.port=80"
+
 #      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
       - "traefik.http.services.forward-two.loadbalancer.sticky.cookie=false"
     environment:
