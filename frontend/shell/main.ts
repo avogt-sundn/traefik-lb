@@ -3,9 +3,9 @@ import { initFederation } from '@softarc/native-federation';
 (async () => {
 
     await initFederation({
-        "mfe1": "http://localhost:3001/remoteEntry.json"
+        "mfe1": "/serve-mfe1/remoteEntry.json"
     });
-    
+
     await import('./app');
 
 })();

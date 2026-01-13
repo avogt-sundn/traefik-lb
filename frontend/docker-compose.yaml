@@ -4,13 +4,39 @@ networks:
     external: true
 
 services:
+  shell:
+    image: shell
+    build:
+      context: .
+      args:
+        - AIM=shell
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.serve-shell.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.serve-shell.entrypoints=web,websecure"
+      - "traefik.http.services.serve-shell.loadbalancer.server.port=80"
+  mfe1:
+    image: mfe1
+    build:
+      context: .
+      args:
+        - AIM=mfe1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.serve-mfe1.rule=PathPrefix(`/serve-mfe1`)"
+      - "traefik.http.middlewares.remove-context-path.replacePathRegex.regex=^/serve-mfe1(.*)"
+      - "traefik.http.middlewares.remove-context-path.replacePathRegex.replacement=$1"
+      - "traefik.http.routers.serve-mfe1.middlewares=remove-context-path"
+      - "traefik.http.routers.serve-mfe1.entrypoints=web,websecure"
+      - "traefik.http.services.serve-mfe1.loadbalancer.server.port=80"
+
   verdaccio:
     image: verdaccio/verdaccio
-    container_name: 'verdaccio'
+    container_name: "verdaccio"
     environment:
       - VERDACCIO_PORT=4873
     ports:
-      - '4873:4873'
+      - "4873:4873"
     volumes:
       - verdaccio_storage:/verdaccio/storage
       - verdaccio_conf:/verdaccio/conf
