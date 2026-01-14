@@ -1,4 +1,4 @@
-FROM node:24-slim AS build
+FROM node:24 AS build
 WORKDIR /src
 COPY package.json ./
 RUN npm install
