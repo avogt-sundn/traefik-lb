@@ -1,7 +1,8 @@
-FROM node:24 AS build
+FROM node:24-slim AS build
 WORKDIR /src
-COPY . ./
+COPY package.json ./
 RUN npm install
+COPY . ./
 RUN npm run build
 
 FROM nginx:stable AS runtime
