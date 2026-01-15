@@ -1,0 +1,21 @@
+<div class="tab-container">
+  <shared-chip-tabs>
+    <shared-chip-tab-item [label]="'partner.view.subTabs.group' | transloco" cypressid="cypress-group-group">
+      <shared-editable-table
+        (dataChange)="onGroupAssignmentsChanged($event)"
+        [columns]="groupColumns()"
+        [editingDisabled]="!isEditMode()"
+        [initialData]="groupAssignments()"
+        [hideAddButton]="hasGroupAssignment()">
+      </shared-editable-table>
+    </shared-chip-tab-item>
+    <shared-chip-tab-item [label]="'partner.view.subTabs.locations' | transloco" cypressid="cypress-group-location">
+      <shared-editable-table
+        (dataChange)="onLocationDataChanged($event)"
+        [columns]="locationColumns()"
+        [editingDisabled]="true"
+        [initialData]="locationData()">
+      </shared-editable-table>
+    </shared-chip-tab-item>
+  </shared-chip-tabs>
+</div>

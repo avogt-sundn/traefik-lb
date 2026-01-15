@@ -1,0 +1,5 @@
+{
+  "loans": "https://cf-app.dev.ekf.cloud.bdk-bank.de/loans/remoteEntry.json",
+  "partner": "https://cf-app.dev.ekf.cloud.bdk-bank.de/partner/remoteEntry.json",
+  "ekf": "https://cf-app.dev.ekf.cloud.bdk-bank.de/ekf/remoteEntry.json"
+}

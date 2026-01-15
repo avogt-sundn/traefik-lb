@@ -1,0 +1,12 @@
+<div class="tab-container">
+  <div class="tab-content">
+    <shared-editable-table
+      (dataChange)="onContactPersonsChanged($event)"
+      [columns]="contactColumns()"
+      [customAddHandler]="customAddHandler"
+      [customEditHandler]="customEditHandler"
+      [editingDisabled]="!isEditMode()"
+      [initialData]="contactPersons()">
+    </shared-editable-table>
+  </div>
+</div>

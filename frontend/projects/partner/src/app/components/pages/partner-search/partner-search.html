@@ -1,0 +1,118 @@
+<shared-mfe-content>
+  <div ngProjectAs="interaction-header">
+    <partner-subnavbar></partner-subnavbar>
+  </div>
+
+  <div ngProjectAs="interaction-content">
+
+  <form [formGroup]="searchForm" class="search-container">
+
+    <div class="search-row">
+      <shared-validated-form-field
+        (cleared)="resetField('partnerNr')"
+        [validators]="partnerNrValidators"
+        errorType="numbersOnly"
+        formControlName="partnerNr"
+        labelKey="partner.search.fields.partnerNumber">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        (cleared)="resetField('alphacode')"
+        [allowWildcard]="true"
+        [validators]="alphacodeValidators"
+        errorType="alphanumeric"
+        formControlName="alphacode"
+        labelKey="partner.search.fields.alphacode">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="search-row">
+      <shared-validated-form-field
+        (cleared)="resetField('name')"
+        [validators]="nameValidators"
+        formControlName="name"
+        labelKey="forms.fields.name">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="search-row">
+      <shared-validated-form-field
+        (cleared)="resetField('street')"
+        [validators]="streetValidators"
+        formControlName="street"
+        labelKey="forms.fields.street">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        (cleared)="resetField('postalCode')"
+        [allowWildcard]="true"
+        [validators]="postalCodeValidators"
+        errorType="numbersOnly"
+        formControlName="postalCode"
+        labelKey="forms.fields.postalCode">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        (cleared)="resetField('city')"
+        [allowWildcard]="true"
+        [validators]="cityValidators"
+        errorType="lettersOnly"
+        formControlName="city"
+        labelKey="forms.fields.city">
+      </shared-validated-form-field>
+    </div>
+
+    @if (searchForm.invalid && !searchForm.untouched && searchForm.errors?.['atLeastOneField']) {
+      <shared-info-panel
+        type="info"
+        [title]="'forms.validation.insufficientCriteria.title' | transloco"
+        [textItems]="['forms.validation.insufficientCriteria.atLeastOneField' | transloco]">
+      </shared-info-panel>
+    }
+
+    @if (partnerTreetableService && hasResults) {
+      <partner-treetable [treetableService]="partnerTreetableService" [displayedColumns]="partnerDisplayedColumns"
+                         [treeColumn]="'type'" [iconConfigs]="partnerIconConfigs"
+                         (rowClick)="onRowClick($event)"></partner-treetable>
+    }
+
+    @if (searchPerformed && !hasResults) {
+      <shared-info-panel
+        type="info"
+        [title]="'messages.search.noResults.title' | transloco"
+        [textItems]="[
+          'messages.search.noResults.description' | transloco,
+          'messages.search.noResults.suggestion' | transloco
+        ]">
+      </shared-info-panel>
+    }
+  </form>
+
+  </div>
+
+  <div ngProjectAs="interaction-footer" class="mfe-footer-button-group">
+    <button (click)="resetForm()"
+            color="primary"
+            id="partner-search-reset"
+            cypressid="cypress-partner-search-reset"
+            matButton="filled">
+      {{ 'common.reset' | transloco }}
+    </button>
+    <button (click)="search()"
+            color="primary"
+            id="partner-search-submit"
+            cypressid="cypress-partner-search-submit"
+            matButton="filled"
+            type="submit">
+      {{ 'common.search' | transloco }}
+    </button>
+    <button (click)="createNewPartner()"
+            color="accent"
+            id="partner-create-new"
+            cypressid="cypress-partner-create-new"
+            matButton="filled">
+      {{ 'partner.search.actions.createNew' | transloco }}
+    </button>
+  </div>
+
+</shared-mfe-content>

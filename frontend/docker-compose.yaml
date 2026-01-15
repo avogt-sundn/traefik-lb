@@ -10,6 +10,7 @@ services:
       context: .
       args:
         - AIM=shell
+        - NPM_MIRROR=http://verdaccio:4873
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.serve-shell.rule=PathPrefix(`/`)"
@@ -21,6 +22,7 @@ services:
       context: .
       args:
         - AIM=mfe1
+        - NPM_MIRROR=http://verdaccio:4873
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.serve-mfe1.rule=PathPrefix(`/serve-mfe1`)"

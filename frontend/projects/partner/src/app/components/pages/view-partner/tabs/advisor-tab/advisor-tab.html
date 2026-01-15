@@ -1,0 +1,63 @@
+<div class="tab-container">
+
+  <div class="advisor-tree-container">
+    @if (isTreeViewLoading()) {
+      <div class="tree-loading">
+        <mat-icon>hourglass_empty</mat-icon>
+      </div>
+    } @else {
+      <div class="selected-advisor-fields">
+        <shared-validated-form-field
+          fieldType="input"
+          labelKey="partner.view.advisor.fields.advisor"
+          name="selectedAdvisor"
+          [ngModel]="selectedAdvisorFromTree()"
+          [readonly]="true"
+          [showClearButton]="false"
+          [placeholder]="'partner.view.advisor.placeholders.noAdvisorSelected' | transloco">
+        </shared-validated-form-field>
+
+        <shared-validated-form-field
+          fieldType="input"
+          labelKey="partner.view.advisor.fields.creditDepartment"
+          name="selectedBranch"
+          [ngModel]="selectedBranchFromTree()"
+          [readonly]="true"
+          [showClearButton]="false"
+          [placeholder]="'partner.view.advisor.placeholders.noCreditDepartmentSelected' | transloco">
+        </shared-validated-form-field>
+
+        @if (isEditMode()) {
+          <div class="action-button-row">
+            <button mat-raised-button
+                    color="primary"
+                    type="button"
+                    (click)="onAssignByPostalCode()"
+                    cypressId="assign-advisor-button">
+              {{ 'partner.view.advisor.actions.assign' | transloco }}
+            </button>
+          </div>
+        }
+      </div>
+
+      @if (isEditMode()) {
+        @if (infoPanelMessage()) {
+          <div class="info-panel-spacing">
+            <shared-info-panel
+              type="info"
+              [textItems]="[infoPanelMessage() | transloco]">
+            </shared-info-panel>
+          </div>
+        }
+
+        <partner-treetable
+          [treetableService]="advisorTreetableService"
+          [displayedColumns]="treeDisplayedColumns()"
+          [iconConfigs]="treeIconConfigs()"
+          treeColumn="name"
+          (rowClick)="onTreeNodeClick($event)">
+        </partner-treetable>
+      }
+    }
+  </div>
+</div>
