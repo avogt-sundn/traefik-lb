@@ -1,11 +1,12 @@
 FROM node:24 AS build
+ARG AIM
 WORKDIR /src
-COPY package.json package-lock.json ./
+COPY tsconfig.json package.json package-lock.json angular.json ./
 RUN npm install
-COPY . ./
-RUN npm run build
+COPY ./projects ./projects
+RUN npm run build:$AIM
 
 FROM nginx:stable AS runtime
 EXPOSE 80
 ARG AIM
-COPY --from=build src/dist/$AIM  /usr/share/nginx/html
+COPY --from=build /src/dist/$AIM/browser  /usr/share/nginx/html

@@ -2,7 +2,8 @@
 include:
   - java-one/docker-compose.yaml
   - java-two/docker-compose.yaml
-
+  - frontend/docker-compose.yaml
+  
 services:
   forward:
     profiles:

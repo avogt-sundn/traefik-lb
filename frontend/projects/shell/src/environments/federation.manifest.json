@@ -1,5 +1,5 @@
 {
-  "loans": "http://localhost:4201/remoteEntry.json",
-  "partner": "http://localhost:4202/remoteEntry.json",
-  "ekf": "http://localhost:4203/remoteEntry.json"
+"loans": "/loans/remoteEntry.json",
+"partner": "/partner/remoteEntry.json",
+"ekf": "/ekf/remoteEntry.json"
 }
