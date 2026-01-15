@@ -12,18 +12,9 @@ services:
         - AIM=shell
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.shell-assets.rule=PathPrefix(`/assets`) || PathPrefix(`/shared`) || Path(`/(.*).js`) || Path(`/.*\\.(js|css|png|jpg|json|gz)$`)"
-      - "traefik.http.routers.shell-assets.entrypoints=web,websecure"
-      - "traefik.http.routers.shell-assets.priority=100"
-
-      - "traefik.http.routers.shell.middlewares=shell-spa-rewrite@docker"
-      - "traefik.http.middlewares.shell-spa-rewrite.replacepathregex.regex=^/.*$"
-      - "traefik.http.middlewares.shell-spa-rewrite.replacepathregex.replacement=/index.html"
-
       - "traefik.http.routers.shell-spa.rule=PathPrefix(`/`)"
       - "traefik.http.routers.shell-spa.entrypoints=web,websecure"
       - "traefik.http.routers.shell-spa.priority=10"
-      - "traefik.http.routers.shell-spa.middlewares=shell-spa-rewrite@docker"
   ekf:
     image: ekf
     build:
