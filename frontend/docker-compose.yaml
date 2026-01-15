@@ -12,9 +12,9 @@ services:
         - AIM=shell
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.shell-spa.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.shell-spa.entrypoints=web,websecure"
-      - "traefik.http.routers.shell-spa.priority=10"
+      - "traefik.http.routers.shell.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.shell.entrypoints=web,websecure"
+      - "traefik.http.routers.shell.priority=1"
   ekf:
     image: ekf
     build:
