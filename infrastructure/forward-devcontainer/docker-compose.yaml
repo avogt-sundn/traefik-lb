@@ -71,3 +71,26 @@ services:
       interval: 1s
       timeout: 2s
       retries: 3
+  forward-ekf:
+    image: forward:latest
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-ekf.rule=PathPrefix(`/ekf`)"
+      - "traefik.http.middlewares.forward-ekf-strip.stripprefix.prefixes=/ekf"
+      - "traefik.http.routers.forward-ekf.middlewares=forward-ekf-strip@docker"
+      - "traefik.http.routers.forward-ekf.entrypoints=web"
+      - "traefik.http.services.forward-ekf.loadbalancer.server.port=4203"
+      - "traefik.http.services.forward-ekf.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.forward-ekf.loadbalancer.healthcheck.port=4203"
+    environment:
+      - LISTEN_PORT=4203
+      - TARGET_HOST=traefik-lb
+      - TARGET_PORT=4203
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4203/"]
+      interval: 1s
+      timeout: 2s
+      retries: 3
