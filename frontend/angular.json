@@ -163,7 +163,8 @@
                     "defaultConfiguration": "development",
                     "options": {
                         "port": 4200,
-                        "host": "0.0.0.0"
+                        "host": "0.0.0.0",
+                        "proxyConfig": "projects/shell/proxy.conf.json"
                     }
                 },
                 "lint": {
