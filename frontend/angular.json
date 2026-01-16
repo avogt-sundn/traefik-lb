@@ -90,10 +90,7 @@
                             ],
                             "optimization": false,
                             "sourceMap": true,
-                            "outputHashing": "all",
-                            "define": {
-                                "ngDevMode": "false"
-                            }
+                            "outputHashing": "all"
                         }
                     },
                     "defaultConfiguration": "production"
@@ -142,10 +139,7 @@
                     "options": {},
                     "configurations": {
                         "production": {
-                            "target": "loans:esbuild:production",
-                            "define": {
-                                "ngDevMode": "false"
-                            }
+                            "target": "loans:esbuild:production"
                         }
                     },
                     "defaultConfiguration": "production"
@@ -206,10 +200,7 @@
                                     "maximumError": "10kB"
                                 }
                             ],
-                            "outputHashing": "all",
-                            "define": {
-                                "ngDevMode": "false"
-                            }
+                            "outputHashing": "all"
                         }
                     },
                     "defaultConfiguration": "production"
@@ -257,10 +248,7 @@
                     "options": {},
                     "configurations": {
                         "production": {
-                            "target": "partner:esbuild:production",
-                            "define": {
-                                "ngDevMode": "false"
-                            }
+                            "target": "partner:esbuild:production"
                         }
                     },
                     "defaultConfiguration": "production"
@@ -321,10 +309,7 @@
                                     "maximumError": "10kB"
                                 }
                             ],
-                            "outputHashing": "all",
-                            "define": {
-                                "ngDevMode": "false"
-                            }
+                            "outputHashing": "all"
                         }
                     },
                     "defaultConfiguration": "production"
