@@ -1,5 +1,6 @@
 include:
-  - infrastructure/docker-compose.yaml
+  - infrastructure/traefik/docker-compose.yaml
+  - infrastructure/forward-devcontainer/docker-compose.yaml
   - backend/java-one/docker-compose.yaml
   - backend/java-two/docker-compose.yaml
   - frontend/docker-compose.yaml

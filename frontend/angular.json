@@ -31,11 +31,11 @@
                         },
                         "integration": {
                             "target": "shell:esbuild:integration",
-                            "dev": false
+                            "dev": true
                         },
                         "cf-qa": {
                             "target": "shell:esbuild:cf-qa",
-                            "dev": false
+                            "dev": true
                         },
                         "production": {
                             "target": "shell:esbuild:production"
@@ -202,11 +202,11 @@
                         },
                         "integration": {
                             "target": "loans:esbuild:integration",
-                            "dev": false
+                            "dev": true
                         },
                         "cf-qa": {
                             "target": "loans:esbuild:cf-qa",
-                            "dev": false
+                            "dev": true
                         },
                         "production": {
                             "target": "loans:esbuild:production"
@@ -371,11 +371,11 @@
                         },
                         "integration": {
                             "target": "partner:esbuild:integration",
-                            "dev": false
+                            "dev": true
                         },
                         "cf-qa": {
                             "target": "partner:esbuild:cf-qa",
-                            "dev": false
+                            "dev": true
                         },
                         "production": {
                             "target": "partner:esbuild:production"
@@ -442,7 +442,10 @@
                                     "maximumError": "10kB"
                                 }
                             ],
-                            "outputHashing": "all"
+                            "outputHashing": "all",
+                            "define": {
+                                "ngDevMode": "true"
+                            }
                         },
                         "development": {
                             "optimization": false,
@@ -540,11 +543,11 @@
                         },
                         "integration": {
                             "target": "ekf:esbuild:integration",
-                            "dev": false
+                            "dev": true
                         },
                         "cf-qa": {
                             "target": "ekf:esbuild:cf-qa",
-                            "dev": false
+                            "dev": true
                         },
                         "production": {
                             "target": "ekf:esbuild:production"

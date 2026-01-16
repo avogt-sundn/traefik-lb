@@ -78,7 +78,7 @@
       "decimal": "{{fieldName}} hat ein ungültiges Dezimalformat",
       "maxSum": "Die Summe überschreitet den maximal erlaubten Wert",
       "insufficientCriteria": {
-        "title": "Die Suche ist unzulässig.",
+        "title": "Die Suche ist unschön.",
         "atLeastOneField": "Es muss mind. in einem Suchfeld eine Eingabe von mind. 3 Zeichen erfolgen. Im Feld Name müssen alle Worte mind. 3-stellig sein, vermeiden Sie 2-stellige Worte (z.B. “AG”) bei der Suche nach Namen!"
       },
       "generic": "{{fieldName}} enthält ungültige Daten",

@@ -1,0 +1,73 @@
+networks:
+  default:
+    name: docker-default-network
+    external: true
+
+services:
+  forward-api-two:
+    image: forward:latest
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-two.rule=PathPrefix(`/api/two`)"
+      - "traefik.http.routers.forward-two.entrypoints=web"
+      - "traefik.http.services.forward-two.loadbalancer.server.port=80"
+      - "traefik.http.services.forward-two.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.forward-two.loadbalancer.healthcheck.port=80"
+      # - "traefik.http.routers.forward-shell.rule=PathPrefix(`/`)"
+      # - "traefik.http.routers.forward-shell.entrypoints=web"
+      # - "traefik.http.services.forward-shell.loadbalancer.server.port=3000"
+      # - "traefik.http.routers.forward-mfe1.rule=PathPrefix(`/serve-mfe1`)"
+      # - "traefik.http.routers.forward-mfe1.entrypoints=web"
+      # - "traefik.http.services.forward-mfe1.loadbalancer.server.port=3001"
+
+      #      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
+    environment:
+      - TARGET_HOST=traefik-lb
+      - TARGET_PORT=8080
+  forward-shell:
+    image: forward:latest
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-shell.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.forward-shell.entrypoints=web"
+      - "traefik.http.services.forward-shell.loadbalancer.server.port=4200"
+      - "traefik.http.services.forward-shell.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.forward-shell.loadbalancer.healthcheck.port=4200"
+    environment:
+      - LISTEN_PORT=4200
+      - TARGET_HOST=traefik-lb
+      - TARGET_PORT=4200
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200/"]
+      interval: 1s
+      timeout: 2s
+      retries: 3
+
+  forward-partner:
+    image: forward:latest
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-partner.rule=PathPrefix(`/partner`)"
+      - "traefik.http.middlewares.forward-partner-strip.stripprefix.prefixes=/partner"
+      - "traefik.http.routers.forward-partner.middlewares=forward-partner-strip@docker"
+      - "traefik.http.routers.forward-partner.entrypoints=web"
+      - "traefik.http.services.forward-partner.loadbalancer.server.port=4202"
+      - "traefik.http.services.forward-partner.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.forward-partner.loadbalancer.healthcheck.port=4202"
+    environment:
+      - LISTEN_PORT=4202
+      - TARGET_HOST=traefik-lb
+      - TARGET_PORT=4202
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4202/"]
+      interval: 1s
+      timeout: 2s
+      retries: 3
