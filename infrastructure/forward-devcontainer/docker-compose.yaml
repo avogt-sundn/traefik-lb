@@ -37,6 +37,7 @@ services:
       - "traefik.http.services.forward-shell.loadbalancer.server.port=4200"
       - "traefik.http.services.forward-shell.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.forward-shell.loadbalancer.healthcheck.port=4200"
+      - "traefik.http.routers.forward-shell.priority=10"
     environment:
       - LISTEN_PORT=4200
       - TARGET_HOST=traefik-lb
@@ -61,6 +62,7 @@ services:
       - "traefik.http.services.forward-partner.loadbalancer.server.port=4202"
       - "traefik.http.services.forward-partner.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.forward-partner.loadbalancer.healthcheck.port=4202"
+      - "traefik.http.routers.forward-partner.priority=100"
     environment:
       - LISTEN_PORT=4202
       - TARGET_HOST=traefik-lb
@@ -84,6 +86,7 @@ services:
       - "traefik.http.services.forward-ekf.loadbalancer.server.port=4203"
       - "traefik.http.services.forward-ekf.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.forward-ekf.loadbalancer.healthcheck.port=4203"
+      - "traefik.http.routers.forward-ekf.priority=100"
     environment:
       - LISTEN_PORT=4203
       - TARGET_HOST=traefik-lb
