@@ -9,15 +9,30 @@ RUN npm run build:$AIM
 FROM nginx:stable AS runtime
 EXPOSE 80
 ARG AIM
-COPY --from=build /src/dist/$AIM/browser  /usr/share/nginx/html
 
-# Minimal SPA fallback directly in Dockerfile
-RUN echo 'server {\n\
-    listen 80;\n\
-    root /usr/share/nginx/html;\n\
-    index index.html;\n\
-\n\
-    location / {\n\
-        try_files $uri $uri/ /index.html;\n\
-    }\n\
-}' > /etc/nginx/conf.d/default.conf
+# Copy Angular build output
+COPY --from=build /src/dist/$AIM/browser /usr/share/nginx/html
+
+# Override nginx.conf: enable MIME types + SPA fallback
+RUN cat > /etc/nginx/nginx.conf <<EOF
+worker_processes 1;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  include       /etc/nginx/mime.types;
+  default_type  application/octet-stream;
+
+  server {
+    listen 80;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+      try_files \$uri \$uri/ /index.html;
+    }
+  }
+}
+EOF
