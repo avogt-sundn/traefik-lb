@@ -14,7 +14,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.shell.rule=PathPrefix(`/`)"
       - "traefik.http.routers.shell.entrypoints=web,websecure"
-      - "traefik.http.routers.shell.priority=20"
+      - "traefik.http.routers.shell.priority=100"
   ekf:
     image: ekf
     build:
@@ -28,7 +28,7 @@ services:
       - "traefik.http.routers.ekf.middlewares=ekf-strip@docker"
       - "traefik.http.routers.ekf.entrypoints=web,websecure"
       - "traefik.http.services.ekf.loadbalancer.server.port=80"
-      - "traefik.http.routers.ekf.priority=200"
+      - "traefik.http.routers.ekf.priority=120"
 
   loans:
     image: loans
@@ -43,7 +43,7 @@ services:
       - "traefik.http.routers.loans.middlewares=loans-strip@docker"
       - "traefik.http.routers.loans.entrypoints=web,websecure"
       - "traefik.http.services.loans.loadbalancer.server.port=80"
-      - "traefik.http.routers.loans.priority=200"
+      - "traefik.http.routers.loans.priority=120"
 
   partner:
     image: partner
@@ -58,5 +58,5 @@ services:
       - "traefik.http.routers.partner.middlewares=partner-strip@docker"
       - "traefik.http.routers.partner.entrypoints=web,websecure"
       - "traefik.http.services.partner.loadbalancer.server.port=80"
-      - "traefik.http.routers.partner.priority=200"
+      - "traefik.http.routers.partner.priority=120"
 

@@ -26,7 +26,7 @@ The diagram illustrates a web application architecture:
 
 1. Backend containers are discovered as upstreams automatically by Traefik with its Docker provider listening on the Docker socket.
 
-1. CORS headers are not necessary when no cross site domains are in use.
+1. CORS and CSP headers are not necessary when no cross site domains are in use.
 
 #### How CORS works
 
@@ -99,3 +99,22 @@ flowchart TB
     Java1 --- UpstreamCert
     Java2 --- UpstreamCert
 ````
+
+```mermaid
+
+flowchart TB
+    System[Containerized System]
+
+    subgraph Feature[Feature Containers]
+        Angular[Angular Container<br/>UI / Static Assets]
+        Java[Java Container<br/>Business APIs]
+    end
+
+    subgraph Infrastructure[Infrastructure Containers]
+        Traefik[Traefik Edge Proxy<br/>Routing / TLS / Proxy]
+        Support[Supporting Infra<br/>Monitoring / Logging / Auth]
+    end
+
+    System --> Feature
+    System --> Infrastructure
+```
