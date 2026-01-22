@@ -1,8 +1,31 @@
+
+networks:
+  internal:
+    driver: bridge
+  proxy:
+  default:
+    name: docker-default-network
+    external: true
+
 services:
+
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy
+    container_name: socket-proxy
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      CONTAINERS: 1
+    networks:
+      - proxy
+
   traefik:
     image: avogt/traefik-with-localhost-tls:2.11
     command:
       - --providers.file.filename=/traefik_conf.yml
+      - --providers.docker.endpoint=tcp://socket-proxy:2375
       - --entrypoints.web.address=:80
       - --entrypoints.web.http.redirections.entryPoint.to=websecure
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
@@ -14,7 +37,8 @@ services:
       - --api
       - --api.insecure=true
       - --api.dashboard=true
-
+    depends_on:
+      - socket-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -23,6 +47,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - internal
+      - proxy
       - default
 
   web:
@@ -37,11 +62,3 @@ services:
       - internal
     deploy:
       replicas: 4
-
-networks:
-  internal:
-    driver: bridge
-
-  default:
-    name: docker-default-network
-    external: true
