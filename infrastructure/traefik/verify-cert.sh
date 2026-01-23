@@ -15,7 +15,7 @@ echo ""
 
 # Extract the server certificate
 echo "1️⃣  Extracting server certificate from gateway:443..."
-openssl s_client -connect gateway:443 -showcerts </dev/null | openssl x509 -outform PEM > "$TEMP_DIR/server.crt"
+openssl s_client -connect gateway:443 -showcerts 2>/dev/null </dev/null | openssl x509 -outform PEM > "$TEMP_DIR/server.crt"
 
 if [ ! -f "$TEMP_DIR/server.crt" ]; then
   echo "❌ Failed to extract server certificate"
