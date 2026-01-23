@@ -9,7 +9,6 @@ networks:
 services:
   dockerd-proxy:
     image: tecnativa/docker-socket-proxy
-    container_name: dockerd-proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
@@ -30,7 +29,7 @@ services:
       context: .
     command:
       - --providers.file.filename=/traefik_conf.yml
-      - --providers.docker.endpoint=tcp://socket-proxy:2375
+      - --providers.docker.endpoint=tcp://dockerd-proxy:2375
       - --entrypoints.web.address=:80
       - --entrypoints.web.http.redirections.entryPoint.to=websecure
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
@@ -58,13 +57,14 @@ services:
     networks:
       - backends
       - edge
+      - default
       - dockerd
 
   standby:
     image: traefik-custom:v2.11
     command:
       - --providers.file.filename=/traefik_conf.yml
-      - --providers.docker.endpoint=tcp://socket-proxy:2375
+      - --providers.docker.endpoint=tcp://dockerd-proxy:2375
       - --entrypoints.web.address=:80
       - --entrypoints.web.http.redirections.entryPoint.to=websecure
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
@@ -92,5 +92,6 @@ services:
     networks:
       - backends
       - edge
+      - default
       - dockerd
 
