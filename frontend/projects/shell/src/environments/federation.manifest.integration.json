@@ -1,5 +1,0 @@
-{
-  "loans": "https://corefinance-int.s-und-n.de/loans/remoteEntry.json",
-  "partner": "https://corefinance-int.s-und-n.de/partner/remoteEntry.json",
-  "ekf": "https://corefinance-int.s-und-n.de/ekf/remoteEntry.json"
-}
