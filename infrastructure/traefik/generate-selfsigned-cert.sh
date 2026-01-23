@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 # Variables for certificate details
 ROOT_CN="My Root CA"
-SERVER_CN="server.example.com"
+SERVER_CN="server.my.localhost"
 
 # Create directory for certificates
 CERT_DIR="./certs"
@@ -47,7 +47,7 @@ echo "- Server Key: ${CERT_DIR}/server.key"
 
 # Variables
 CERT_DIR="./certs"
-KEY_FILE="selfsigned.key"
-CSR_FILE="selfsigned.csr"
-CRT_FILE="selfsigned.crt"
+KEY_FILE="server.key"
+CSR_FILE="server.csr"
+CRT_FILE="server.crt"
 DAYS_VALID=365
