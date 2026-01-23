@@ -66,22 +66,35 @@ services:
     networks:
       - backends
     deploy:
-      replicas: 4
+      replicas: 3
 
   test-http-200:
     image: curlimages/curl:latest
     command: 
       - /bin/sh
       - -c
-      - "while true; do curl -k -f -H 'Host: example.localhost.direct' -w '\\nHTTP Status: %{http_code}\\n' https://traefik && sleep 10 || sleep 5; done"
+      - |
+        while true; do
+          curl -k -f \
+            -H 'Host: example.localhost.direct' \
+            -w '\\nHTTP Status: %{http_code}\\n' \
+            https://traefik && sleep 1 || sleep 2
+        done
     depends_on:
       - traefik
       - web
     networks:
       - default
     healthcheck:
-      test: ["CMD", "curl", "-k", "-f", "https://example.localhost.direct"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 5s
+      test:
+        - CMD
+        - curl
+        - -k
+        - -f
+        - -H
+        - "Host: example.localhost.direct"
+        - https://traefik
+      interval: 1s
+      timeout: 1s
+      retries: 5
+      start_period: 1s
