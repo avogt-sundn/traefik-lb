@@ -27,25 +27,11 @@ services:
     image: traefik-custom:v2.11
     build:
       context: .
-    command:
-      - --providers.file.filename=/traefik_conf.yml
-      - --providers.docker.endpoint=tcp://dockerd-proxy:2375
-      - --entrypoints.web.address=:80
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.web.http.redirections.entryPoint.scheme=https
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.websecure.http.tls=true
-      - --providers.docker=true
-      - --providers.docker.watch=true
-      - --providers.docker.exposedbydefault=false
-      - --api
-      - --api.insecure=true
-      - --api.dashboard=true
     depends_on:
       dockerd-proxy:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "nc", "-zv", "localhost", "443"]
+      test: ["CMD", "sh", "-c", "nc -zv localhost 80 && nc -zv localhost 443 && nc -zv localhost 8080"]
       interval: 3s
       timeout: 3s
       retries: 3
@@ -63,13 +49,7 @@ services:
   standby:
     image: traefik-custom:v2.11
     command:
-      - --providers.file.filename=/traefik_conf.yml
       - --providers.docker.endpoint=tcp://dockerd-proxy:2375
-      - --entrypoints.web.address=:80
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.web.http.redirections.entryPoint.scheme=https
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.websecure.http.tls=true
       - --providers.docker=true
       - --providers.docker.watch=true
       - --providers.docker.exposedbydefault=false
@@ -80,7 +60,7 @@ services:
       dockerd-proxy:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "nc", "-zv", "localhost", "443"]
+      test: ["CMD", "bash", "-c", "nc -zv localhost 80 && nc -zv localhost 443 && curl -s http://localhost:8080/ping"]
       interval: 3s
       timeout: 3s
       retries: 3

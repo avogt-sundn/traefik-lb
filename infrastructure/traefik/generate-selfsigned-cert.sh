@@ -8,10 +8,18 @@ SERVER_CN="server.my.localhost"
 CERT_DIR="./certs"
 mkdir -p "$CERT_DIR"
 
-# Generate a self-signed root certificate
-openssl genrsa -out "${CERT_DIR}/rootCA.key" 2048
-openssl req -x509 -new -nodes -key "${CERT_DIR}/rootCA.key" -sha256 -days 3650 -out "${CERT_DIR}/rootCA.pem" -subj "/CN=${ROOT_CN}"
+# Check if rootCA files exist, if not generate them
+if [ -f "${CERT_DIR}/rootCA.key" ] && [ -f "${CERT_DIR}/rootCA.pem" ]; then
+  echo "✓ Root CA files already exist, skipping generation..."
+else
+  echo "→ Generating root CA certificate..."
+  # Generate a self-signed root certificate
+  openssl genrsa -out "${CERT_DIR}/rootCA.key" 2048
+  openssl req -x509 -new -nodes -key "${CERT_DIR}/rootCA.key" -sha256 -days 3650 -out "${CERT_DIR}/rootCA.pem" -subj "/CN=${ROOT_CN}"
+  echo "✓ Root CA generated"
+fi
 
+echo "→ Generating server certificate..."
 # Generate a private key for the server certificate
 openssl genrsa -out "${CERT_DIR}/server.key" 2048
 
@@ -38,10 +46,11 @@ openssl req -new -key "${CERT_DIR}/server.key" -out "${CERT_DIR}/server.csr" -co
 # Sign the CSR with the root CA to create the server certificate
 openssl x509 -req -in "${CERT_DIR}/server.csr" -CA "${CERT_DIR}/rootCA.pem" -CAkey "${CERT_DIR}/rootCA.key" -CAcreateserial -out "${CERT_DIR}/server.crt" -days 365 -sha256 -extfile ${CERT_DIR}/server.csr.cnf -extensions v3_req
 
-echo "Generated TLS certificate chain:"
-echo "- Root CA: ${CERT_DIR}/rootCA.pem"
-echo "- Server Certificate: ${CERT_DIR}/server.crt"
-echo "- Server Key: ${CERT_DIR}/server.key"
+echo ""
+echo "✓ Generated TLS certificate chain:"
+echo "  - Root CA: ${CERT_DIR}/rootCA.pem"
+echo "  - Server Certificate: ${CERT_DIR}/server.crt"
+echo "  - Server Key: ${CERT_DIR}/server.key"
 
 # You can now use these certificates in Traefik or other TLS servers
 
