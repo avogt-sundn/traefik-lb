@@ -70,16 +70,23 @@ services:
 
   test-http-200:
     image: curlimages/curl:latest
-    command: 
+    entrypoint:
       - /bin/sh
       - -c
       - |
+        cat > /tmp/test-http-200-check.sh << 'EOF'
+        #!/bin/sh
+        curl -k -f -v \
+          -H "Host: example.localhost.direct" \
+          -w '\nHTTP Status: %{http_code}\n' \
+          https://traefik
+        exit $?
+        EOF
+        chmod ugo+x /tmp/test-http-200-check.sh;
         while true; do
-          curl -k -f \
-            -H 'Host: example.localhost.direct' \
-            -w '\\nHTTP Status: %{http_code}\\n' \
-            https://traefik && sleep 1 || sleep 2
+            /tmp/test-http-200-check.sh; sleep 2;
         done
+        sleep infinity
     depends_on:
       - traefik
       - web
@@ -88,12 +95,8 @@ services:
     healthcheck:
       test:
         - CMD
-        - curl
-        - -k
-        - -f
-        - -H
-        - "Host: example.localhost.direct"
-        - https://traefik
+        - /bin/sh
+        - /tmp/test-http-200-check.sh
       interval: 1s
       timeout: 1s
       retries: 5
