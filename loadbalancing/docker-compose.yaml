@@ -22,7 +22,7 @@ services:
     deploy:
       replicas: 3
 
-  test-http-200:
+  test-loadbalancing:
     image: curlimages/curl:latest
     entrypoint:
       - /bin/sh
@@ -46,7 +46,6 @@ services:
         condition: service_healthy
       web:
         condition: service_started
-
     networks:
       - edge
     healthcheck:
