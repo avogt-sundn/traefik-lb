@@ -55,7 +55,7 @@ Traefik routes are prioritized:
       # the name of this instance is: forward-shell
       - "traefik.enable=true"
       - "traefik.http.routers.forward-shell.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.forward-shell.entrypoints=web"
+      - "traefik.http.routers.forward-shell.entrypoints=web,websecure"
       - "traefik.http.services.forward-shell.loadbalancer.server.port=4200"
       - "traefik.http.services.forward-shell.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.forward-shell.loadbalancer.healthcheck.port=4200"
