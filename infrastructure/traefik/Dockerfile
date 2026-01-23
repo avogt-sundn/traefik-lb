@@ -7,7 +7,7 @@ WORKDIR /etc/traefik
 COPY traefik_conf.yml /etc/traefik/traefik.yml
 
 # Copy the self-signed certificates
-COPY certs/server.crt /etc/traefik/certs/server.crt
+COPY certs/server-chain.crt /etc/traefik/certs/server-chain.crt
 COPY certs/server.key /etc/traefik/certs/server.key
 
 # Expose ports

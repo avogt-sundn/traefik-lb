@@ -46,10 +46,14 @@ openssl req -new -key "${CERT_DIR}/server.key" -out "${CERT_DIR}/server.csr" -co
 # Sign the CSR with the root CA to create the server certificate
 openssl x509 -req -in "${CERT_DIR}/server.csr" -CA "${CERT_DIR}/rootCA.pem" -CAkey "${CERT_DIR}/rootCA.key" -CAcreateserial -out "${CERT_DIR}/server.crt" -days 365 -sha256 -extfile ${CERT_DIR}/server.csr.cnf -extensions v3_req
 
+# Create a complete certificate chain (server cert + root CA)
+cat "${CERT_DIR}/server.crt" "${CERT_DIR}/rootCA.pem" > "${CERT_DIR}/server-chain.crt"
+
 echo ""
 echo "✓ Generated TLS certificate chain:"
 echo "  - Root CA: ${CERT_DIR}/rootCA.pem"
 echo "  - Server Certificate: ${CERT_DIR}/server.crt"
+echo "  - Server Certificate Chain (with Root CA): ${CERT_DIR}/server-chain.crt"
 echo "  - Server Key: ${CERT_DIR}/server.key"
 
 # You can now use these certificates in Traefik or other TLS servers
