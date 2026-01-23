@@ -2,22 +2,27 @@ networks:
   default:
     name: docker-default-network
     external: true
-  internal:
-    driver: bridge
-  proxy:
+  backends:
+  edge:
+  dockerd:
 
 services:
-  socket-proxy:
+  dockerd-proxy:
     image: tecnativa/docker-socket-proxy
-    container_name: socket-proxy
-    restart: unless-stopped
-    privileged: true
+    container_name: dockerd-proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
+      LOG_LEVEL: "notice"
       CONTAINERS: 1
+    healthcheck:
+      test: ["CMD", "nc", "-zv", "localhost", "2375"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 1s
     networks:
-      - proxy
+      - dockerd
 
   gateway:
     image: traefik-custom:v2.11
@@ -27,8 +32,8 @@ services:
       - --providers.file.filename=/traefik_conf.yml
       - --providers.docker.endpoint=tcp://socket-proxy:2375
       - --entrypoints.web.address=:80
-      #      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      #      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
       - --entrypoints.websecure.address=:443
       - --entrypoints.websecure.http.tls=true
       - --providers.docker=true
@@ -37,14 +42,23 @@ services:
       - --api
       - --api.insecure=true
       - --api.dashboard=true
+    depends_on:
+      dockerd-proxy:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "nc", "-zv", "localhost", "443"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 1s
     ports:
       - "80:80"
       - "443:443"
       - "8888:8080"
     networks:
-      - internal
-      - default
-      - proxy
+      - backends
+      - edge
+      - dockerd
 
   standby:
     image: traefik-custom:v2.11
@@ -67,19 +81,7 @@ services:
       - "444:443"
       - "8889:8080"
     networks:
-      - internal
-      - default
-      - proxy
-  web:
-    image: traefik/whoami
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`example.localhost.direct`)"
-      - "traefik.http.routers.web.entrypoints=websecure"
-      - "traefik.http.services.web.loadbalancer.server.port=443"
-      - "traefik.http.services.web.loadbalancer.server.scheme=https" # Use HTTPS for upstream
-      - "traefik.http.services.web.loadbalancer.sticky.cookie=false"
-    networks:
-      - internal
-    deploy:
-      replicas: 2
+      - backends
+      - edge
+      - dockerd
+  

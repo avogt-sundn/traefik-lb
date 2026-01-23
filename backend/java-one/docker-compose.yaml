@@ -2,7 +2,6 @@ networks:
   default:
     name: docker-default-network
     external: true
-  backend:
 
 services:
   postgres-one:

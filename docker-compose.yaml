@@ -1,6 +1,13 @@
+
+networks:
+  default:
+    name: docker-default-network
+    external: true
+
 include:
   - infrastructure/traefik/docker-compose.yaml
   - infrastructure/forward-devcontainer/docker-compose.yaml
   - backend/java-one/docker-compose.yaml
   - backend/java-two/docker-compose.yaml
   - frontend/docker-compose.yaml
+  - loadbalancing/docker-compose.yaml
