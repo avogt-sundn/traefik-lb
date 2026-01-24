@@ -24,7 +24,7 @@ services:
       postgres-two:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: ["CMD", "curl", "-k", "-f", "https://localhost/actuator/health"]
       interval: 1s
       timeout: 5s
       retries: 3
@@ -32,10 +32,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.app-two.rule=PathPrefix(`/api/two`)"
       - "traefik.http.routers.app-two.entrypoints=web,websecure"
-      - "traefik.http.services.app-two.loadbalancer.server.port=8080"
-#      - "traefik.http.services.app-two.loadbalancer.server.scheme=https" # Use HTTPS for upstream
+      - "traefik.http.services.app-two.loadbalancer.server.port=443"
+      - "traefik.http.services.app-two.loadbalancer.server.scheme=https"
       - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
-      - "traefik.http.services.app-two.loadbalancer.healthcheck.port=8080"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.port=443"
 
 volumes:
   postgres_data:
