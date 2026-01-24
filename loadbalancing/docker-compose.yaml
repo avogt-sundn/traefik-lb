@@ -4,16 +4,13 @@ networks:
   default:
     name: docker-default-network
     external: true
-  edge:
-    name: traefik_edge
-    external: true
 
 services:
   whoami:
     image: whoami-tls:latest
     build:
-      context: ..
-      dockerfile: loadbalancing/Dockerfile.whoami
+      context: .
+      dockerfile: Dockerfile
     command:
       - --port=8443
       - --cert=/certs/server.crt

@@ -2,8 +2,8 @@
 FROM traefik/whoami:latest
 
 # Copy the self-signed certificates into the container
-COPY infrastructure/traefik/certs/server.crt /certs/server.crt
-COPY infrastructure/traefik/certs/server.key /certs/server.key
+COPY certs/server.crt /certs/server.crt
+COPY certs/server.key /certs/server.key
 
 # Expose HTTPS port
 EXPOSE 8443
