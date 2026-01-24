@@ -24,6 +24,9 @@ providers:
   file:
     filename: /etc/traefik/traefik.yml
 
+serversTransport:
+  insecureSkipVerify: true
+
 tls:
   stores:
     default:
