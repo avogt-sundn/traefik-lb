@@ -1,0 +1,41 @@
+networks:
+  default:
+    name: docker-default-network
+    external: true
+
+services:
+  postgres-three:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app-three-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+
+  app-three:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres-three:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:8080/q/health"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-three.rule=PathPrefix(`/api/three`)"
+      - "traefik.http.routers.app-three.entrypoints=web,websecure"
+      - "traefik.http.services.app-three.loadbalancer.server.port=8080"
+      - "traefik.http.services.app-three.loadbalancer.server.scheme=http"
+      - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/q/health"
+      - "traefik.http.services.app-three.loadbalancer.healthcheck.port=8080"
+
+volumes:
+  postgres_data:

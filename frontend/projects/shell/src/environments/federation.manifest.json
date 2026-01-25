@@ -1,0 +1,5 @@
+{
+"loans": "/loans/remoteEntry.json",
+"partner": "/partner/remoteEntry.json",
+"ekf": "/ekf/remoteEntry.json"
+}

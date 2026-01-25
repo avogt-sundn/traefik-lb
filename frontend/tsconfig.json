@@ -1,15 +1,94 @@
-  {
-    "compilerOptions": {
-      "sourceMap": true,
-      "strict": false,
-      "module": "ES2020",
-      "target": "ES2015",
-      "moduleResolution": "Node",
-      "baseUrl": ".",
-      "paths": {
-        "shared-lib": [
-          "libs/shared-lib/index.ts"
-        ]
-      }
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "resolveJsonModule": true,
+    "declaration": false,
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
+    // optional: debugging in TypeScript
+    // "sourceMap": true,
+    // optional: Find Unused
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "emitDecoratorMetadata": true,
+    "baseUrl": "./",
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "paths": {
+      "@shared/*": [
+        "projects/shared/*"
+      ],
+      "@shell/*": [
+        "projects/shell/*"
+      ],
+      "@ekf/*": [
+        "projects/ekf/*"
+      ],
+      "@partner/*": [
+        "projects/partner/*"
+      ],
+      "@loans/*": [
+        "projects/loans/*"
+      ]
     }
-  }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true,
+    "preserveWhiteSpace": false,
+    "typeCheckHostBindings": false,
+  },
+  "exclude": [
+    "dist",
+  ],
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/shared/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/shell/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/shell/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/loans/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/loans/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/partner/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/partner/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ekf/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ekf/tsconfig.spec.json"
+    }
+  ]
+}

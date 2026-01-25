@@ -1,0 +1,43 @@
+networks:
+  default:
+    name: docker-default-network
+    external: true
+
+services:
+  postgres-two:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app-two-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+
+  app-two:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres-two:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost/actuator/health"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-two.rule=PathPrefix(`/api/two`)"
+      - "traefik.http.routers.app-two.entrypoints=web,websecure"
+      - "traefik.http.services.app-two.loadbalancer.server.port=443"
+      - "traefik.http.services.app-two.loadbalancer.server.scheme=https"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.port=443"
+      - "traefik.http.routers.app-two.priority=1000"
+
+
+volumes:
+  postgres_data:

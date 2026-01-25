@@ -1,0 +1,43 @@
+networks:
+  default:
+    name: docker-default-network
+    external: true
+
+services:
+  postgres-one:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app-one-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app-one:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres-one:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost/actuator/health"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-one.rule=PathPrefix(`/api/one`)"
+      - "traefik.http.routers.app-one.entrypoints=web,websecure"
+      - "traefik.http.services.app-one.loadbalancer.server.port=443"
+      - "traefik.http.services.app-one.loadbalancer.server.scheme=https"
+      - "traefik.http.services.app-one.loadbalancer.sticky.cookie=false"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.port=443"
+      - "traefik.http.routers.app-two.priority=1000"
+
+
+

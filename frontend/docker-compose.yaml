@@ -12,37 +12,51 @@ services:
         - AIM=shell
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.serve-shell.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.serve-shell.entrypoints=web,websecure"
-      - "traefik.http.services.serve-shell.loadbalancer.server.port=80"
-  mfe1:
-    image: mfe1
+      - "traefik.http.routers.shell.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.shell.entrypoints=web,websecure"
+      - "traefik.http.routers.shell.priority=100"
+  ekf:
+    image: ekf
     build:
       context: .
       args:
-        - AIM=mfe1
+        - AIM=ekf
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.serve-mfe1.rule=PathPrefix(`/serve-mfe1`)"
-      - "traefik.http.middlewares.remove-context-path.replacePathRegex.regex=^/serve-mfe1(.*)"
-      - "traefik.http.middlewares.remove-context-path.replacePathRegex.replacement=$1"
-      - "traefik.http.routers.serve-mfe1.middlewares=remove-context-path"
-      - "traefik.http.routers.serve-mfe1.entrypoints=web,websecure"
-      - "traefik.http.services.serve-mfe1.loadbalancer.server.port=80"
+      - "traefik.http.routers.ekf.rule=PathPrefix(`/ekf`)"
+      - "traefik.http.middlewares.ekf-strip.stripprefix.prefixes=/ekf"
+      - "traefik.http.routers.ekf.middlewares=ekf-strip@docker"
+      - "traefik.http.routers.ekf.entrypoints=web,websecure"
+      - "traefik.http.services.ekf.loadbalancer.server.port=80"
+      - "traefik.http.routers.ekf.priority=120"
 
-  verdaccio:
-    image: verdaccio/verdaccio
-    container_name: "verdaccio"
-    environment:
-      - VERDACCIO_PORT=4873
-    ports:
-      - "4873:4873"
-    volumes:
-      - verdaccio_storage:/verdaccio/storage
-      - verdaccio_conf:/verdaccio/conf
-      - verdaccio_plugins:/verdaccio/plugins
+  loans:
+    image: loans
+    build:
+      context: .
+      args:
+        - AIM=loans
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.loans.rule=PathPrefix(`/loans`)"
+      - "traefik.http.middlewares.loans-strip.stripprefix.prefixes=/loans"
+      - "traefik.http.routers.loans.middlewares=loans-strip@docker"
+      - "traefik.http.routers.loans.entrypoints=web,websecure"
+      - "traefik.http.services.loans.loadbalancer.server.port=80"
+      - "traefik.http.routers.loans.priority=120"
 
-volumes:
-  verdaccio_storage:
-  verdaccio_conf:
-  verdaccio_plugins:
+  partner:
+    image: partner
+    build:
+      context: .
+      args:
+        - AIM=partner
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.partner.rule=PathPrefix(`/partner`)"
+      - "traefik.http.middlewares.partner-strip.stripprefix.prefixes=/partner"
+      - "traefik.http.routers.partner.middlewares=partner-strip@docker"
+      - "traefik.http.routers.partner.entrypoints=web,websecure"
+      - "traefik.http.services.partner.loadbalancer.server.port=80"
+      - "traefik.http.routers.partner.priority=120"
+

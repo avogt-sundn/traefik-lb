@@ -1,0 +1,30 @@
+# Stage 1: Build the application using Maven
+FROM maven:3.9.8-eclipse-temurin-21 AS build
+
+WORKDIR /app
+
+# Copy Maven project files
+COPY pom.xml .
+RUN mvn -B compile
+
+COPY src ./src
+# Build the project and skip tests for speed
+RUN mvn -B package -DskipTests
+
+
+# Stage 2: Run the application with a lightweight JRE
+FROM eclipse-temurin:21-jre-alpine
+
+# for healthcheck is using curl
+RUN apk update && apk add curl && apk upgrade
+
+WORKDIR /app
+
+# Copy the built JAR from the previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose HTTPS port
+EXPOSE 443
+
+# Run the application on port 443 (HTTPS)
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443"]

@@ -1,0 +1,147 @@
+<form [formGroup]="addressForm" class="tab-container">
+  <shared-validated-form-field
+    [readonly]="!isEditMode()"
+    [showClearButton]="false"
+    [dtoValidator]="validateContactPersonField"
+    dtoField="name1"
+    cssClass="address-form"
+    formControlName="company1"
+    labelKey="forms.fields.company">
+  </shared-validated-form-field>
+
+  <shared-validated-form-field
+    [readonly]="!isEditMode()"
+    [showClearButton]="false"
+    [dtoValidator]="validateContactPersonField"
+    dtoField="name2"
+    cssClass="address-form"
+    formControlName="company2"
+    labelKey="forms.fields.company">
+  </shared-validated-form-field>
+
+  <shared-validated-form-field
+    [readonly]="!isEditMode()"
+    [showClearButton]="false"
+    [dtoValidator]="validateContactPersonField"
+    dtoField="name3"
+    cssClass="address-form"
+    formControlName="company3"
+    labelKey="forms.fields.company">
+  </shared-validated-form-field>
+
+  <div class="row-of-fields">
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateAddressField"
+      dtoField="street"
+      cssClass="street"
+      formControlName="street"
+      labelKey="forms.fields.street">
+    </shared-validated-form-field>
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateAddressField"
+      dtoField="houseNumber"
+      cssClass="house-number"
+      formControlName="houseNumber"
+      labelKey="forms.fields.houseNumber">
+    </shared-validated-form-field>
+  </div>
+
+  <div class="row-of-fields">
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateAddressField"
+      dtoField="countryId"
+      cssClass="country"
+      formControlName="country"
+      [allowEmpty]="false"
+      [options]="countryOptions()"
+      fieldType="select"
+      labelKey="forms.fields.country">
+    </shared-validated-form-field>
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateAddressField"
+      dtoField="postalCode"
+      cssClass="postcode"
+      formControlName="postalCode"
+      labelKey="forms.fields.postalCode">
+    </shared-validated-form-field>
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateAddressField"
+      dtoField="city"
+      cssClass="place"
+      formControlName="city"
+      labelKey="forms.fields.city">
+    </shared-validated-form-field>
+  </div>
+
+  <div class="row-of-fields">
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateTelecommunicationField"
+      dtoField="areaCode"
+      cssClass="phone-prefix"
+      formControlName="phonePrefix"
+      labelKey="forms.fields.phonePrefix">
+    </shared-validated-form-field>
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateTelecommunicationField"
+      dtoField="phoneNumber"
+      cssClass="phone-number"
+      formControlName="phoneNumber"
+      labelKey="forms.fields.phoneMainNumber">
+    </shared-validated-form-field>
+  </div>
+
+  <div class="row-of-fields">
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateTelecommunicationField"
+      dtoField="areaCode"
+      cssClass="mobile-prefix"
+      formControlName="mobilePrefix"
+      labelKey="forms.fields.mobilePrefix">
+    </shared-validated-form-field>
+    <shared-validated-form-field
+      [readonly]="!isEditMode()"
+      [showClearButton]="false"
+      [dtoValidator]="validateTelecommunicationField"
+      dtoField="phoneNumber"
+      cssClass="mobile-number"
+      formControlName="mobileNumber"
+      labelKey="forms.fields.mobileMainNumber">
+    </shared-validated-form-field>
+  </div>
+
+  <shared-validated-form-field
+    [readonly]="!isEditMode()"
+    [showClearButton]="false"
+    [dtoValidator]="validateTelecommunicationField"
+    dtoField="email"
+    cssClass="email-sepa"
+    formControlName="sepaEmailNotification"
+    labelKey="partner.view.emailSepa">
+  </shared-validated-form-field>
+
+  <shared-validated-form-field
+    [readonly]="!isEditMode()"
+    [showClearButton]="false"
+    [dtoValidator]="validateContactPersonField"
+    dtoField="alphaCode"
+    cssClass="alpha-code"
+    formControlName="alphacode"
+    labelKey="partner.view.alphacode">
+  </shared-validated-form-field>
+</form>

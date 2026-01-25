@@ -1,0 +1,184 @@
+<h2 mat-dialog-title>{{ getDialogTitle() }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="contactForm" class="contact-form">
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        dtoField="alphaCode"
+        formControlName="alphaCode"
+        labelKey="partner.view.contact.fields.alphaCode">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        [options]="functionOptions()"
+        [allowEmpty]="false"
+        dtoField="partnerFunctionId"
+        fieldType="select"
+        formControlName="function"
+        labelKey="partner.view.contact.fields.function">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        dtoField="departmentName"
+        formControlName="department"
+        labelKey="partner.view.contact.fields.department">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [allowEmpty]="true"
+        [dtoValidator]="validateContactPersonField"
+        [options]="salutationOptions()"
+        [showClearButton]="false"
+        dtoField="salutationCode"
+        fieldType="select"
+        formControlName="salutationCode"
+        labelKey="partner.view.contact.fields.salutation">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        dtoField="title"
+        formControlName="title"
+        labelKey="partner.view.contact.fields.title">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        dtoField="firstName"
+        formControlName="firstName"
+        labelKey="partner.view.contact.fields.firstName">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        dtoField="name1"
+        formControlName="lastName"
+        labelKey="partner.view.contact.fields.lastName">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateAddressField"
+        dtoField="street"
+        formControlName="street"
+        labelKey="partner.view.contact.fields.street">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateAddressField"
+        dtoField="houseNumber"
+        formControlName="houseNumber"
+        labelKey="partner.view.contact.fields.houseNumber">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateAddressField"
+        dtoField="postalCode"
+        formControlName="postalCode"
+        labelKey="partner.view.contact.fields.postalCode">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateAddressField"
+        dtoField="city"
+        formControlName="city"
+        labelKey="partner.view.contact.fields.city">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [readonly]="true"
+        formControlName="country"
+        labelKey="partner.view.contact.fields.country">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateContactPersonField"
+        dtoField="dateOfBirth"
+        formControlName="birthDate"
+        inputType="date"
+        labelKey="partner.view.contact.fields.birthDate">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateTelecommunicationField"
+        dtoField="areaCode"
+        formControlName="phonePrefix"
+        labelKey="partner.view.contact.fields.phonePrefix">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateTelecommunicationField"
+        dtoField="phoneNumber"
+        formControlName="phoneNumber"
+        labelKey="partner.view.contact.fields.phoneNumber">
+      </shared-validated-form-field>
+    </div>
+
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateTelecommunicationField"
+        dtoField="areaCode"
+        formControlName="mobilePrefix"
+        labelKey="partner.view.contact.fields.mobilePrefix">
+      </shared-validated-form-field>
+
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateTelecommunicationField"
+        dtoField="phoneNumber"
+        formControlName="mobileNumber"
+        labelKey="partner.view.contact.fields.mobileNumber">
+      </shared-validated-form-field>
+    </div>
+
+    <!-- Zeile 9: E-Mail -->
+    <div class="row-of-fields">
+      <shared-validated-form-field
+        [showClearButton]="false"
+        [dtoValidator]="validateTelecommunicationField"
+        dtoField="email"
+        formControlName="email"
+        inputType="email"
+        labelKey="partner.view.contact.fields.email">
+      </shared-validated-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button (click)="onCancel()" mat-button>{{ 'common.cancel' | transloco }}</button>
+  <button (click)="onSave()" color="primary" mat-raised-button>
+    {{ 'common.save' | transloco }}
+  </button>
+</mat-dialog-actions>

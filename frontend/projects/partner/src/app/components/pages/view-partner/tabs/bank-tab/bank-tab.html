@@ -1,0 +1,11 @@
+<div class="tab-container">
+  <div class="tab-content">
+    <shared-editable-table
+      (dataChange)="onBankConnectionsChanged($event)"
+      [columns]="bankColumns()"
+      [editingDisabled]="!isEditMode()"
+      [initialData]="bankConnections()"
+      [newRowDefaults]="newBankConnectionDefaults">
+    </shared-editable-table>
+  </div>
+</div>
