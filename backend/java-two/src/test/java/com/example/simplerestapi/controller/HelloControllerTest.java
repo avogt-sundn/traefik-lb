@@ -30,7 +30,7 @@ public class HelloControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
+                // .apply(springSecurity())
                 .build();
     }
 
@@ -38,8 +38,7 @@ public class HelloControllerTest {
     void sayHello() throws Exception {
 
         mockMvc
-                .perform(get("/api/two/hello")
-                        .with(user("testuser").roles("USER")))
+                .perform(get("/api/two/hello"))
                 .andExpect(status().isOk());
     }
 

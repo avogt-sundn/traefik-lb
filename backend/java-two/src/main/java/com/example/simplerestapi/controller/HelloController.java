@@ -28,7 +28,6 @@ public class HelloController {
     }
 
     @GetMapping("/hello")
-    @RolesAllowed({ "USER" })
     public String sayHello() {
         return "Hello, World!";
     }
