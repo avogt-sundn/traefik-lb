@@ -9,5 +9,6 @@ include:
   - infrastructure/forward-devcontainer/docker-compose.yaml
   - backend/java-one/docker-compose.yaml
   - backend/java-two/docker-compose.yaml
+  - backend/java-three/docker-compose.yaml
   - frontend/docker-compose.yaml
   - loadbalancing/docker-compose.yaml
