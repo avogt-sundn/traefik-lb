@@ -4,6 +4,29 @@ networks:
     external: true
 
 services:
+  forward-api-one:
+    image: forward:latest
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-one.rule=PathPrefix(`/api/two`)"
+      - "traefik.http.routers.forward-one.entrypoints=web,websecure"
+      - "traefik.http.services.forward-one.loadbalancer.server.port=8443"
+      - "traefik.http.services.forward-one.loadbalancer.server.scheme=https"
+      - "traefik.http.services.forward-one.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.forward-one.loadbalancer.healthcheck.port=8443"
+      - "traefik.http.routers.forward-one.priority=1100"
+    environment:
+      - LISTEN_PORT=8443
+      - TARGET_HOST=traefik-lb
+      - TARGET_PORT=8443
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:8443/actuator/health"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
   forward-api-two:
     image: forward:latest
     build:
@@ -12,13 +35,23 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.forward-two.rule=PathPrefix(`/api/two`)"
       - "traefik.http.routers.forward-two.entrypoints=web,websecure"
-      - "traefik.http.services.forward-two.loadbalancer.server.port=80"
+      - "traefik.http.services.forward-two.loadbalancer.server.port=8444"
+      - "traefik.http.services.forward-two.loadbalancer.server.scheme=https"
       - "traefik.http.services.forward-two.loadbalancer.healthcheck.path=/actuator/health"
-      - "traefik.http.services.forward-two.loadbalancer.healthcheck.port=80"
+      - "traefik.http.services.forward-two.loadbalancer.healthcheck.port=8444"
       - "traefik.http.routers.forward-two.priority=1100"
     environment:
+      - LISTEN_PORT=8444
       - TARGET_HOST=traefik-lb
-      - TARGET_PORT=8080
+      - TARGET_PORT=8444
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:8444/actuator/health"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+
+
   forward-shell:
     image: forward:latest
     build:
