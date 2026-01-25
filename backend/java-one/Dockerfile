@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose application port (adjust if your app uses a different one)
-EXPOSE 8080
+EXPOSE 443
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

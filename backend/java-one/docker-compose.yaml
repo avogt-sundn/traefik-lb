@@ -35,5 +35,9 @@ services:
       - "traefik.http.services.app-one.loadbalancer.server.port=443"
       - "traefik.http.services.app-one.loadbalancer.server.scheme=https"
       - "traefik.http.services.app-one.loadbalancer.sticky.cookie=false"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
+      - "traefik.http.services.app-two.loadbalancer.healthcheck.port=443"
+      - "traefik.http.routers.app-two.priority=1000"
+
 
 

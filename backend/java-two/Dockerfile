@@ -23,8 +23,8 @@ WORKDIR /app
 # Copy the built JAR from the previous stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose application port (adjust if your app uses a different one)
-EXPOSE 8080
+# Expose HTTPS port
+EXPOSE 443
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Run the application on port 443 (HTTPS)
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443"]
