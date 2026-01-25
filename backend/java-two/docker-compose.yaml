@@ -36,6 +36,8 @@ services:
       - "traefik.http.services.app-two.loadbalancer.server.scheme=https"
       - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
       - "traefik.http.services.app-two.loadbalancer.healthcheck.port=443"
+      - "traefik.http.routers.app-two.priority=1000"
+
 
 volumes:
   postgres_data:
