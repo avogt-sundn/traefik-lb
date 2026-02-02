@@ -4,7 +4,7 @@ networks:
     external: true
 services:
   e2e-tests:
-    image: traefik/whoami
+    image: whoami-tls:latest
     depends_on:
       app-one:
         condition: service_healthy
