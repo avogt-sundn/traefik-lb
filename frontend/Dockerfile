@@ -1,10 +1,16 @@
 FROM node:24 AS build
 ARG AIM
 WORKDIR /src
+ENV DIR node_modules
+
 COPY tsconfig.json package.json package-lock.json angular.json ./
-RUN npm install
+RUN --mount=type=cache,target=~/.npm --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached node_modules size: " $(du -sh $DIR)
+RUN --mount=type=cache,target=~/.npm --mount=type=cache,target=$DIR npm install --loglevel=info
+
 COPY ./projects ./projects
-RUN npm run build:$AIM
+RUN --mount=type=cache,target=~/.npm --mount=type=cache,target=$DIR npm run build:$AIM --loglevel=info
+
+
 
 FROM nginx:stable AS runtime
 EXPOSE 80
