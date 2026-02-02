@@ -7,11 +7,10 @@ ENV DIR /root/.m2/repository
 # Copy Maven project files
 COPY pom.xml .
 RUN --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached .m2 size: " $(du -sh $DIR)
-RUN --mount=type=cache,target=$DIR mvn -B compile
+RUN --mount=type=cache,target=$DIR mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
 
 COPY src ./src
 # Build the project and skip tests for speed
-RUN --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached .m2 size: " $(du -sh $DIR)
 RUN --mount=type=cache,target=$DIR mvn -B package -DskipTests
 
 
