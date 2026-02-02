@@ -14,8 +14,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.shell.rule=PathPrefix(`/`)"
       - "traefik.http.routers.shell.entrypoints=web,websecure"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.port=80"
+      - "traefik.http.services.shell.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.shell.loadbalancer.healthcheck.port=80"
       - "traefik.http.routers.shell.priority=100"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
@@ -35,8 +35,8 @@ services:
       - "traefik.http.routers.ekf.middlewares=ekf-strip@docker"
       - "traefik.http.routers.ekf.entrypoints=web,websecure"
       - "traefik.http.services.ekf.loadbalancer.server.port=80"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.port=80"
+      - "traefik.http.services.ekf.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.ekf.loadbalancer.healthcheck.port=80"
       - "traefik.http.routers.ekf.priority=120"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
@@ -57,9 +57,9 @@ services:
       - "traefik.http.routers.loans.middlewares=loans-strip@docker"
       - "traefik.http.routers.loans.entrypoints=web,websecure"
       - "traefik.http.services.loans.loadbalancer.server.port=80"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.port=80"
-      - "traefik.http.routers.ekf.priority=120"
+      - "traefik.http.services.loans.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.loans.loadbalancer.healthcheck.port=80"
+      - "traefik.http.routers.loans.priority=120"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 1s
@@ -79,9 +79,9 @@ services:
       - "traefik.http.routers.partner.middlewares=partner-strip@docker"
       - "traefik.http.routers.partner.entrypoints=web,websecure"
       - "traefik.http.services.partner.loadbalancer.server.port=80"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.port=80"
-      - "traefik.http.routers.ekf.priority=120"
+      - "traefik.http.services.partner.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.partner.loadbalancer.healthcheck.port=80"
+      - "traefik.http.routers.partner.priority=120"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 1s

@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.app-three.rule=PathPrefix(`/api/three`)"
       - "traefik.http.routers.app-three.entrypoints=web,websecure"
       - "traefik.http.services.app-three.loadbalancer.server.port=443"
-      - "traefik.http.services.app-three.loadbalancer.server.scheme=http"
+      - "traefik.http.services.app-three.loadbalancer.server.scheme=https"
       - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/q/health"
       - "traefik.http.services.app-three.loadbalancer.healthcheck.port=443"
 
@@ -50,15 +50,15 @@ services:
       test: ["CMD", "curl", "-k", "-f", "https://localhost/q/health"]
       interval: 1s
       timeout: 5s
-      retries: 3
+      retries: 5
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app-three.rule=PathPrefix(`/api/three`)"
-      - "traefik.http.routers.app-three.entrypoints=web,websecure"
-      - "traefik.http.services.app-three.loadbalancer.server.port=443"
-      - "traefik.http.services.app-three.loadbalancer.server.scheme=http"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.path=/q/health"
-      - "traefik.http.services.app-three.loadbalancer.healthcheck.port=443"
+      - "traefik.http.routers.app-three-native.rule=PathPrefix(`/api/three`)"
+      - "traefik.http.routers.app-three-native.entrypoints=web,websecure"
+      - "traefik.http.services.app-three-native.loadbalancer.server.port=443"
+      - "traefik.http.services.app-three-native.loadbalancer.server.scheme=https"
+      - "traefik.http.services.app-three-native.loadbalancer.healthcheck.path=/q/health"
+      - "traefik.http.services.app-three-native.loadbalancer.healthcheck.port=443"
 
 
 volumes:
