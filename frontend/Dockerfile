@@ -4,12 +4,11 @@ WORKDIR /src
 ENV DIR node_modules
 
 COPY tsconfig.json package.json package-lock.json angular.json ./
-RUN --mount=type=cache,target=~/.npm --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached node_modules size: " $(du -sh $DIR)
-RUN --mount=type=cache,target=~/.npm --mount=type=cache,target=$DIR npm install --loglevel=info
+RUN --mount=type=cache,target=/root/.npm --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached node_modules size: " $(du -sh $DIR)
+RUN --mount=type=cache,target=/root/.npm --mount=type=cache,target=$DIR npm install --loglevel=info
 
 COPY ./projects ./projects
-RUN --mount=type=cache,target=~/.npm --mount=type=cache,target=$DIR npm run build:$AIM --loglevel=info
-
+RUN --mount=type=cache,target=/root/.npm --mount=type=cache,target=$DIR npm run build:$AIM --loglevel=info
 
 
 FROM nginx:stable AS runtime
