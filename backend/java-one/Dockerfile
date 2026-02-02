@@ -29,5 +29,5 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose application port (adjust if your app uses a different one)
 EXPOSE 443
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Run the application on port 443 (HTTPS)
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443"]
