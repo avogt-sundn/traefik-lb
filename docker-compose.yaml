@@ -12,3 +12,4 @@ include:
   - backend/java-three/docker-compose.yaml
   - frontend/docker-compose.yaml
   - loadbalancing/docker-compose.yaml
+  - tests/docker-compose.yaml

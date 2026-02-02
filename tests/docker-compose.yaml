@@ -1,0 +1,22 @@
+networks:
+  default:
+    name: docker-default-network
+    external: true
+services:
+  e2e-tests:
+    image: traefik/whoami
+    depends_on:
+      app-one:
+        condition: service_healthy
+      app-two:
+        condition: service_healthy
+      app-three:
+        condition: service_healthy
+      shell:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      ekf:
+        condition: service_healthy
+      partner:
+        condition: service_healthy
