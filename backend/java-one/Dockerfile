@@ -9,8 +9,8 @@ COPY pom.xml .
 RUN --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached .m2 size: " $(du -sh $DIR)
 RUN --mount=type=cache,target=$DIR mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
 COPY src ./src
-# Build the project and skip tests for speed
-RUN --mount=type=cache,target=$DIR mvn -B package -DskipTests
+# Build the project, deactivate 'dev' profile and skip tests for speed
+RUN --mount=type=cache,target=$DIR mvn -B package -P'!dev' -DskipTests
 
 
 # Stage 2: Run the application with a lightweight JRE
@@ -28,4 +28,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 443
 
 # Run the application on port 443 (HTTPS)
-ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443","--spring.devtools.restart.enabled=false"]
