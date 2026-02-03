@@ -24,6 +24,14 @@ providers:
   file:
     filename: /etc/traefik/traefik.yml
 
+accesslog:
+  filePath: /logs/access.log
+  bufferingsize: 50
+
+
+log:
+  level: DEBUG
+
 serversTransport:
   insecureSkipVerify: true
 

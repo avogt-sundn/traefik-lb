@@ -40,6 +40,8 @@ services:
       - "80:80"
       - "443:443"
       - "8888:8080"
+    environment:
+      - TZ=Europe/Berlin
     networks:
       - backends
       - edge
