@@ -14,10 +14,22 @@ RUN --mount=type=cache,target=$DIR ./mvnw -B org.apache.maven.plugins:maven-depe
 COPY src /code/src
 RUN --mount=type=cache,target=$DIR ./mvnw package -Dnative
 
+FROM registry.access.redhat.com/ubi9/ubi-minimal AS curlbin
+RUN microdnf install -y \
+    curl-minimal \
+    ca-certificates \
+ && microdnf clean all
+
 ## Stage 2 : create the docker final image
 FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+
 WORKDIR /app/
 COPY --from=build /code/target/*-runner /app/application
+COPY --from=curlbin /usr/bin/curl /usr/bin/curl
+COPY --from=curlbin /etc/pki/ca-trust /etc/pki/ca-trust
+COPY --from=curlbin /etc/ssl/certs /etc/ssl/certs
+COPY --from=curlbin /usr/lib64 /usr/lib64
+ENV SSL_CERT_DIR=/etc/ssl/certs
 
 # set up permissions for user `1001`
 RUN chmod 775 /app /app/application \

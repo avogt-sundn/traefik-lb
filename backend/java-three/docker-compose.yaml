@@ -60,6 +60,5 @@ services:
       - "traefik.http.services.app-three-native.loadbalancer.healthcheck.path=/q/health"
       - "traefik.http.services.app-three-native.loadbalancer.healthcheck.port=443"
 
-
 volumes:
   postgres_data:

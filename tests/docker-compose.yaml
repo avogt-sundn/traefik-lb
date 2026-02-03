@@ -12,6 +12,8 @@ services:
         condition: service_healthy
       app-three:
         condition: service_healthy
+      app-three-native:
+        condition: service_healthy
       shell:
         condition: service_healthy
       loans:
