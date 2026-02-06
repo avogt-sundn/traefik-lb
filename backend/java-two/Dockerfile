@@ -1,21 +1,20 @@
 # Stage 1: Build the application using Maven
-FROM maven:3.9.8-eclipse-temurin-21 AS build
+FROM maven:3-eclipse-temurin-25-alpine AS build
 
 WORKDIR /app
-ENV DIR /root/.m2/repository
+ENV DIR=/root/.m2/repository
 #RUN mvn -X
 # Copy Maven project files
 COPY pom.xml .
 RUN --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached .m2 size: " $(du -sh $DIR)
 RUN --mount=type=cache,target=$DIR mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
-
 COPY src ./src
-# Build the project and skip tests for speed
-RUN --mount=type=cache,target=$DIR mvn -B package -DskipTests
+# Build the project, deactivate 'dev' profile and skip tests for speed
+RUN --mount=type=cache,target=$DIR mvn -B package -P'!dev' -DskipTests
 
 
 # Stage 2: Run the application with a lightweight JRE
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 # for healthcheck is using curl
 RUN apk update && apk add curl && apk upgrade
@@ -29,4 +28,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 443
 
 # Run the application on port 443 (HTTPS)
-ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--server.port=443","--spring.devtools.restart.enabled=false"]

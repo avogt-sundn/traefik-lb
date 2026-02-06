@@ -25,9 +25,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost/actuator/health"]
-      interval: 1s
+      interval: 2s
       timeout: 5s
-      retries: 3
+      retries: 5
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-one.rule=PathPrefix(`/api/one`)"

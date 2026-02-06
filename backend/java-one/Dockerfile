@@ -1,8 +1,8 @@
 # Stage 1: Build the application using Maven
-FROM maven:3.9.8-eclipse-temurin-21 AS build
+FROM maven:3-eclipse-temurin-25-alpine AS build
 
 WORKDIR /app
-ENV DIR /root/.m2/repository
+ENV DIR=/root/.m2/repository
 #RUN mvn -X
 # Copy Maven project files
 COPY pom.xml .
@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=$DIR mvn -B package -P'!dev' -DskipTests
 
 
 # Stage 2: Run the application with a lightweight JRE
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 # for healthcheck is using curl
 RUN apk update && apk add curl && apk upgrade
