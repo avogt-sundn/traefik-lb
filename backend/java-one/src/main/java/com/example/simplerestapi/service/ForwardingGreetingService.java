@@ -10,15 +10,20 @@ import com.example.simplerestapi.model.Greeting;
 @Service
 public class ForwardingGreetingService {
 
+    private static final String API_TWO_HOST = "gateway";
     private final WebClient webClient;
 
-    public ForwardingGreetingService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://gateway").build();
+    public ForwardingGreetingService(WebClient webClient) {
+        this.webClient = webClient;
     }
 
     public Greeting saveGreeting(String g) {
         return webClient.post()
-                .uri("/api/two/greet")
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host(API_TWO_HOST)
+                        .path("/api/two/greet")
+                        .build())
                 .bodyValue(g)
                 .retrieve()
                 .bodyToMono(Greeting.class)
@@ -27,7 +32,11 @@ public class ForwardingGreetingService {
 
     public List<Greeting> getAllGreetings() {
         return webClient.get()
-                .uri("/api/two/greetings")
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host(API_TWO_HOST)
+                        .path("/api/two/greetings")
+                        .build())
                 .retrieve()
                 .bodyToFlux(Greeting.class)
                 .collectList()

@@ -9,13 +9,14 @@ CERT_DIR="./certs"
 KEYSTORE_PASSWORD="${KEYSTORE_PASSWORD:-changeit}"
 KEYSTORE_ALIAS="${KEYSTORE_ALIAS:-tomcat}"
 KEYSTORE_FORMAT="${KEYSTORE_FORMAT:-PKCS12}"
+CERT=server-chain.crt
 
 echo "🔐 Generating Java Keystore from PEM certificates..."
 echo ""
 
 # Check if certificate files exist
-if [ ! -f "${CERT_DIR}/server.crt" ]; then
-  echo "❌ Error: ${CERT_DIR}/server.crt not found"
+if [ ! -f "${CERT_DIR}/${CERT}" ]; then
+  echo "❌ Error: ${CERT_DIR}/${CERT} not found"
   exit 1
 fi
 
@@ -25,14 +26,14 @@ if [ ! -f "${CERT_DIR}/server.key" ]; then
 fi
 
 echo "→ Input files:"
-echo "   Certificate: ${CERT_DIR}/server.crt"
+echo "   Certificate: ${CERT_DIR}/server-chain.crt"
 echo "   Key: ${CERT_DIR}/server.key"
 echo ""
 
 # Generate PKCS12 keystore
 echo "→ Generating PKCS12 keystore..."
 openssl pkcs12 -export \
-  -in "${CERT_DIR}/server.crt" \
+  -in "${CERT_DIR}/${CERT}" \
   -inkey "${CERT_DIR}/server.key" \
   -out "${CERT_DIR}/keystore.p12" \
   -name "${KEYSTORE_ALIAS}" \
@@ -45,22 +46,25 @@ else
   exit 1
 fi
 
-# Generate JKS keystore (optional, for older Java versions)
-echo "→ Generating JKS keystore (for compatibility)..."
-keytool -importkeystore \
-  -srckeystore "${CERT_DIR}/keystore.p12" \
-  -srcstoretype PKCS12 \
-  -srcstorepass "${KEYSTORE_PASSWORD}" \
-  -destkeystore "${CERT_DIR}/keystore.jks" \
-  -deststoretype JKS \
-  -deststorepass "${KEYSTORE_PASSWORD}" \
-  -noprompt
+
+
+
+# Generate PKCS12 truststore
+echo "→ Generating PKCS12 truststore..."
+openssl pkcs12 -export \
+  -in "${CERT_DIR}/rootCA.pem" \
+  -inkey "${CERT_DIR}/rootCA.key" \
+  -out "${CERT_DIR}/truststore.p12" \
+  -name "${KEYSTORE_ALIAS}" \
+  -passout "pass:${KEYSTORE_PASSWORD}"
 
 if [ $? -eq 0 ]; then
-  echo "✓ JKS keystore created: ${CERT_DIR}/keystore.jks"
+  echo "✓ PKCS12 truststore created: ${CERT_DIR}/truststore.p12"
 else
-  echo "⚠ Warning: Could not create JKS keystore (keytool not available?)"
+  echo "❌ Failed to create PKCS12 truststore"
+  exit 1
 fi
+
 
 echo ""
 echo "═══════════════════════════════════════════════════════════"

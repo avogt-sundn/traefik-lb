@@ -2,7 +2,7 @@
 
 # Variables for certificate details
 ROOT_CN="My Root CA"
-SERVER_CN="server.my.localhost"
+SERVER_CN="gateway"
 
 # Create directory for certificates
 CERT_DIR="./certs"
@@ -38,6 +38,12 @@ subjectAltName     = @alt_names
 
 [ alt_names ]
 DNS.1              = ${SERVER_CN}
+DNS.2              = localhost
+DNS.3              = gateway
+
+IP.1               = 127.0.0.1
+
+
 EOF
 
 # Generate the CSR for the server certificate
