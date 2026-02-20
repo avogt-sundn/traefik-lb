@@ -6,12 +6,14 @@ ENV DIR=/root/.m2/repository
 #RUN mvn -X
 # Copy Maven project files
 COPY pom.xml .
+COPY --chmod=755 mvnw  .
+COPY .mvn .mvn/
+
 RUN --mount=type=cache,target=$DIR mkdir -p $DIR && echo "cached .m2 size: " $(du -sh $DIR)
-RUN --mount=type=cache,target=$DIR mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
+RUN --mount=type=cache,target=$DIR ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:go-offline
 COPY src ./src
 # Build the project, deactivate 'dev' profile and skip tests for speed
-RUN --mount=type=cache,target=$DIR mvn -B package -P'!dev' -DskipTests
-
+RUN --mount=type=cache,target=$DIR ./mvnw -B package -P'!dev' -DskipTests
 
 # Stage 2: Run the application with a lightweight JRE
 FROM eclipse-temurin:25-jre-alpine

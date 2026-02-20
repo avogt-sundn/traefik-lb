@@ -17,6 +17,7 @@ services:
       retries: 3
 
   app-two:
+    image: app-two
     build:
       context: .
       dockerfile: Dockerfile
