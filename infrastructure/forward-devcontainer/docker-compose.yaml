@@ -10,7 +10,7 @@ services:
       context: .
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.forward-one.rule=PathPrefix(`/api/two`)"
+      - "traefik.http.routers.forward-one.rule=PathPrefix(`/api/one`)"
       - "traefik.http.routers.forward-one.entrypoints=web,websecure"
       - "traefik.http.services.forward-one.loadbalancer.server.port=8443"
       - "traefik.http.services.forward-one.loadbalancer.server.scheme=https"
