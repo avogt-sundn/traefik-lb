@@ -44,7 +44,7 @@ services:
         EOF
         chmod ugo+x /tmp/test-http-200-check.sh;
         while true; do
-            /tmp/test-http-200-check.sh; sleep 2;
+            /tmp/test-http-200-check.sh; sleep 10;
         done
         sleep infinity
     depends_on:
