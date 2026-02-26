@@ -22,3 +22,5 @@ services:
         condition: service_healthy
       partner:
         condition: service_healthy
+      gateway:
+        condition: service_healthy

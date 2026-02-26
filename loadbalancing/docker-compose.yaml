@@ -57,7 +57,7 @@ services:
         - CMD
         - /bin/sh
         - /tmp/test-http-200-check.sh
-      interval: 1s
-      timeout: 1s
-      retries: 5
+      interval: 10s
+      timeout: 10s
+      retries: 10
       start_period: 1s
