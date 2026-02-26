@@ -19,9 +19,9 @@ services:
       - "traefik.http.routers.shell.priority=100"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
-      interval: 1s
-      timeout: 2s
-      retries: 3
+      interval: 10s
+      timeout: 10s
+      retries: 10
   ekf:
     image: ekf
     build:
@@ -40,9 +40,9 @@ services:
       - "traefik.http.routers.ekf.priority=120"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
-      interval: 1s
-      timeout: 2s
-      retries: 3
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   loans:
     image: loans
@@ -62,9 +62,9 @@ services:
       - "traefik.http.routers.loans.priority=120"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
-      interval: 1s
-      timeout: 2s
-      retries: 3
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   partner:
     image: partner
@@ -84,7 +84,7 @@ services:
       - "traefik.http.routers.partner.priority=120"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
-      interval: 1s
-      timeout: 2s
-      retries: 3
+      interval: 10s
+      timeout: 10s
+      retries: 10
 

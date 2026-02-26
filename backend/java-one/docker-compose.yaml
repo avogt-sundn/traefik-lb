@@ -12,9 +12,9 @@ services:
       POSTGRES_DB: app-one-db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   app-one:
     image: app-one
@@ -26,9 +26,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-k", "-f", "https://localhost/actuator/health"]
-      interval: 2s
-      timeout: 5s
-      retries: 5
+      interval: 10s
+      timeout: 10s
+      retries: 10
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-one.rule=PathPrefix(`/api/one`)"
