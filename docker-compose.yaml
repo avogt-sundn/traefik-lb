@@ -6,7 +6,8 @@ networks:
 
 include:
   - infrastructure/traefik/docker-compose.yaml
-  - infrastructure/mirrors/docker-compose.yaml
+  - infrastructure/npm-mirror/docker-compose.yaml
+  - infrastructure/maven-mirror/docker-compose.yaml
   - infrastructure/forward-devcontainer/docker-compose.yaml
   - backend/java-one/docker-compose.yaml
   - backend/java-two/docker-compose.yaml

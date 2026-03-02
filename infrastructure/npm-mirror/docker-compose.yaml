@@ -12,17 +12,12 @@ services:
       - NODE_ENV=production
     ports:
       - 4873:4873
-    # healthcheck:
-    #   test: ["CMD", "curl", "-k", "-f", "http://localhost:4873"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 1
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:4873"]
+      interval: 10s
+      timeout: 5s
+      retries: 1
 
 volumes:
   verdaccio-storage:
   verdaccio-plugins:
-
-# networks:
-#   default:
-#     name: docker-default-network
-#     external: true
