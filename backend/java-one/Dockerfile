@@ -10,7 +10,7 @@ RUN mkdir -p $HOME/.m2 && cat > $HOME/.m2/settings.xml <<EOF
     <mirror>
       <id>dockerized-mirror</id>
       <name>Local Mirror Repository</name>
-      <url>http://localhost:8008</url>
+      <url>http://localhost:8008/central</url>
       <mirrorOf>central</mirrorOf>
     </mirror>
   </mirrors>

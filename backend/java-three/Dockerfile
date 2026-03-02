@@ -1,8 +1,23 @@
 # Stage 1: Build the application using Maven
 FROM maven:3.9.8-eclipse-temurin-21 AS build
 
+RUN mkdir -p $HOME/.m2 && cat > $HOME/.m2/settings.xml <<EOF
+
+<settings>
+  <mirrors>
+    <mirror>
+      <id>dockerized-mirror</id>
+      <name>Local Mirror Repository</name>
+      <url>http://localhost:8008/central</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
+EOF
+
+
 WORKDIR /code
-ENV DIR /root/.m2/repository
+ENV DIR=/root/.m2/repository
 COPY  --chmod=0755 mvnw /code/mvnw
 COPY  .mvn /code/.mvn
 COPY pom.xml /code/

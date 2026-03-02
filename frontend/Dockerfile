@@ -4,7 +4,6 @@ WORKDIR /src
 ENV DIR node_modules
 RUN npm set registry http://localhost:4873/
 
-RUN apt update -y && apt-get install -y iputils-ping dnsutils net-tools
 RUN curl http://localhost:4873
 
 COPY tsconfig.json package.json package-lock.json angular.json ./

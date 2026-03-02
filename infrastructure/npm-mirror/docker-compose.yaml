@@ -1,7 +1,7 @@
 services:
-  verdaccio:
-    container_name: verdaccio
-    hostname: verdaccio
+  npm-mirror:
+    container_name: npm-mirror
+    hostname: npm-mirror
     image: verdaccio/verdaccio-custom
     build:
       dockerfile: Dockerfile
