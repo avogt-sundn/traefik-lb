@@ -1,0 +1,34 @@
+networks:
+  backends:
+  default:
+    name: docker-default-network
+    external: true
+
+services:
+  maven:
+    container_name: maven
+    hostname: maven
+    image: maven/maven-custom
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - maven-storage:/app/data
+    environment:
+      # Creates admin token on startup
+      # Format: username:password
+      - REPOSILITE_OPTS=--token=admin:admin123
+      - REPOSILITE_ARGS=--local-configuration=/reposilite.cdn
+      # Optional JVM tuning
+      - JAVA_OPTS=-Xmx256m
+    restart: unless-stopped
+    ports:
+      - 8008:8080
+    # healthcheck:
+    #   test: ["CMD", "curl", "-k", "-f", "http://localhost:4873"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 1
+
+volumes:
+  maven-storage:
+  maven-plugin:

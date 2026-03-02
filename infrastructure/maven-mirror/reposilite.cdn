@@ -1,0 +1,13 @@
+# Hosted releases repository
+repository.releases.type=hosted
+repository.releases.access=public
+
+# Remote mirror to Maven Central
+repository.central.type=remote
+repository.central.url=https: //repo1.maven.org/maven2/
+repository.central.access=public
+
+# Optional: group repository combining both
+repository.maven.type=group
+repository.maven.members=releases,central
+repository.maven.access=public

@@ -1,6 +1,22 @@
 # Stage 1: Build the application using Maven
 FROM maven:3-eclipse-temurin-25-alpine AS build
 
+#RUN cat > /etc/nginx/nginx.conf <<EOF
+
+RUN mkdir -p $HOME/.m2 && cat > $HOME/.m2/settings.xml <<EOF
+
+<settings>
+  <mirrors>
+    <mirror>
+      <id>dockerized-mirror</id>
+      <name>Local Mirror Repository</name>
+      <url>http://localhost:8008</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
+EOF
+
 WORKDIR /app
 ENV DIR=/root/.m2/repository
 #RUN mvn -X
