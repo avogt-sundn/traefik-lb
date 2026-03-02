@@ -1,11 +1,10 @@
-FROM dzikoysk/reposilite:3.5.28
+FROM curlimages/curl:latest
 
-
+USER root
+WORKDIR /
 # Config außerhalb des Volumes ablegen
-COPY reposilite.cdn /reposilite.cdn
+COPY setup.sh some.json /
 
-# Custom entrypoint
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod ugo+rw /setup.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/setup.sh"]

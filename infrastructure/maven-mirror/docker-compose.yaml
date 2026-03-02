@@ -6,28 +6,40 @@ networks:
 
 services:
   maven:
+    image: dzikoysk/reposilite:3.5.28
     container_name: maven
-    hostname: maven
-    image: maven/maven-custom
-    build:
-      dockerfile: Dockerfile
-    volumes:
-      - maven-storage:/app/data
+    # build:
+    #   dockerfile: Dockerfile
+#    volumes:
+      #- maven-storage:/app/data
+      #- $PWD/reposilite.cdn:/conf.cdn
     environment:
       # Creates admin token on startup
       # Format: username:password
       - REPOSILITE_OPTS=--token=admin:admin123
-      - REPOSILITE_ARGS=--local-configuration=/reposilite.cdn
       # Optional JVM tuning
       - JAVA_OPTS=-Xmx256m
     restart: unless-stopped
     ports:
       - 8008:8080
-    # healthcheck:
-    #   test: ["CMD", "curl", "-k", "-f", "http://localhost:4873"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 1
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+      start_period: 2s
+
+
+  bootstrap:
+    image: curlimages/curl:latest
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      maven:
+        condition: service_healthy
+    environment:
+      - REPOSILITE_URL=http://maven:8080
+    restart: "no"
 
 volumes:
   maven-storage:

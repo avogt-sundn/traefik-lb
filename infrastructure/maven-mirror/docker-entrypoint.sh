@@ -1,16 +1,14 @@
 #!/bin/sh
 set -e
 
-if [ ! -f /app/data/configuration.cdn ]; then
-  echo "Injecting initial reposilite.cdn into volume..."
-  cp /reposilite.cdn /app/data/configuration.cdn
-else
-  echo "configuration.cdn already exists in volume."
-  echo "OVERWRITING..."
-  cp /reposilite.cdn /app/data/configuration.cdn
+# if [  -f /app/configuration.cdn ]; then
+#   echo "Injecting initial configuration.cdn  into volume..."
+#   mkdir -p /app/data
+#   touch /app/data/configuration
+#   cat /app/configuration.cdn  >> /app/data/configuration.cdn
+#   rm /configuration.cdn
+# fi
 
-fi
-
-cat /app/data/configuration.cdn
+# cat /app/data/configuration.cdn
 
 exec /app/entrypoint.sh "$@"
