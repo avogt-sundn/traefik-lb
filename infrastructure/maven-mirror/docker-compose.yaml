@@ -10,9 +10,8 @@ services:
     container_name: maven
     # build:
     #   dockerfile: Dockerfile
-#    volumes:
-      #- maven-storage:/app/data
-      #- $PWD/reposilite.cdn:/conf.cdn
+    volumes:
+      - maven-storage:/app/data
     environment:
       # Creates admin token on startup
       # Format: username:password
@@ -43,4 +42,3 @@ services:
 
 volumes:
   maven-storage:
-  maven-plugin:
