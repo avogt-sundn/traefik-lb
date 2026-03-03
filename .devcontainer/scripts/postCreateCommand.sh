@@ -1,4 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
+scriptdir="$(dirname "$0")"
 
 set -e
 
@@ -7,4 +9,4 @@ mkdir -p /home/vscode/.redhat/;
 echo '{\"disabled\":true}' > /home/vscode/.redhat/io.quarkus.analytics.localconfig;
 echo \"export PATH='$PATH':/workspaces/${localWorkspaceFolderBasename}/.devcontainer/scripts\" >> /home/vscode/.zshrc
 
-./setup-maven.sh
+source $scriptdir/setup-maven.sh

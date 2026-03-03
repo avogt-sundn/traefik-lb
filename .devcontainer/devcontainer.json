@@ -11,9 +11,9 @@
     "ghcr.io/devcontainers-extra/features/curl-apt-get:1": {},
     "ghcr.io/devcontainers-extra/features/json-server:1": {},
     "ghcr.io/devcontainers-extra/features/quarkus-sdkman:2": {},
-    "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
+    "ghcr.io/devcontainers-extra/features/springboot-sdkman:2.0.17": {},
     "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {},
-    "ghcr.io/devcontainers/features/common-utils:2.5.4": {},
+    "ghcr.io/devcontainers/features/common-utils:2.5.6": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
     "ghcr.io/devcontainers/features/java:1": {
       "installMaven": "true",
