@@ -21,6 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     depends_on:
       postgres-three:
         condition: service_healthy
@@ -44,6 +45,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.native
+      network: host
     depends_on:
       postgres-three:
         condition: service_healthy

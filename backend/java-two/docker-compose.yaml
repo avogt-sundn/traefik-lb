@@ -21,6 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     depends_on:
       postgres-two:
         condition: service_healthy
@@ -38,7 +39,3 @@ services:
       - "traefik.http.services.app-two.loadbalancer.healthcheck.path=/actuator/health"
       - "traefik.http.services.app-two.loadbalancer.healthcheck.port=443"
       - "traefik.http.routers.app-two.priority=1000"
-
-
-volumes:
-  postgres_data:

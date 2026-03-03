@@ -8,6 +8,7 @@ services:
     image: shell
     build:
       context: .
+      network: host
       args:
         - AIM=shell
     labels:
@@ -26,6 +27,7 @@ services:
     image: ekf
     build:
       context: .
+      network: host
       args:
         - AIM=ekf
     labels:
@@ -48,6 +50,7 @@ services:
     image: loans
     build:
       context: .
+      network: host
       args:
         - AIM=loans
     labels:
@@ -70,6 +73,7 @@ services:
     image: partner
     build:
       context: .
+      network: host
       args:
         - AIM=partner
     labels:
