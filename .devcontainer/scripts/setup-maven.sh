@@ -7,7 +7,7 @@ mkdir -p $HOME/.m2 && cat > $HOME/.m2/settings.xml<<EOF
         <mirror>
             <id>dockerized-mirror</id>
             <name>Local Mirror Repository</name>
-            <url>http://maven:8080/central</url>
+            <url>http://maven-mirror:8080/central</url>
             <mirrorOf>central</mirrorOf>
         </mirror>
     </mirrors>

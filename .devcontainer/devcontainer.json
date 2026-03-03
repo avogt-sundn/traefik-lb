@@ -28,7 +28,7 @@
   "mounts": [
     "source=localcache,target=/home/vscode/.m2,type=volume"
   ],
-"postCreateCommand": "sudo chown -R vscode.vscode /home/vscode/.m2;mkdir -p /home/vscode/.redhat/; echo '{\"disabled\":true}' > /home/vscode/.redhat/io.quarkus.analytics.localconfig;echo \"export PATH='$PATH':/workspaces/${localWorkspaceFolderBasename}/.devcontainer/scripts\" >> /home/vscode/.zshrc",
+"postCreateCommand": ".devcontainer/scripts/postCreateCommand.sh",
   "containerEnv": {
     "DOCKER_NETWORK": "docker-default-network",
 //    "DB_HOST": "postgres",
