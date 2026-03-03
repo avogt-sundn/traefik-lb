@@ -6,7 +6,7 @@
 
 #set -e
 
-REPOSILITE_URL="${1:-http://maven:8080}"
+REPOSILITE_URL="${REPOSILITE_URL:-http://maven-mirror:8080}"
 TOKEN="${2:-YWRtaW46YWRtaW4xMjM=}"
 
 if [ -z "$TOKEN" ]; then
@@ -61,3 +61,15 @@ else
     echo "Repository already exists or error occurred"
     echo "Response: $RESPONSE"
 fi
+
+# Add a forever loop to prevent the entrypoint from terminating
+while true; do
+
+    if ! api_call GET "/api/auth/me" | grep -q "accessToken"; then
+        echo "x Healthcheck failed. Retrying in 10 seconds.."
+    else
+        echo "✓ Healthcheck ok"
+    fi
+    sleep 10
+done
+

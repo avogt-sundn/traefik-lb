@@ -5,13 +5,12 @@ networks:
     external: true
 
 services:
-  maven:
+  maven-mirror:
     image: dzikoysk/reposilite:3.5.28
-    container_name: maven
-    # build:
-    #   dockerfile: Dockerfile
+    container_name: maven-mirror
+    hostname: maven-mirror
     volumes:
-      - maven-storage:/app/data
+      - maven-mirror-storage:/app/data
     environment:
       # Creates admin token on startup
       # Format: username:password
@@ -29,16 +28,16 @@ services:
       start_period: 2s
 
 
-  bootstrap:
-    image: curlimages/curl:latest
+  bootstrap-maven-mirror:
+    image: maven-mirror-bootstrap
     build:
       dockerfile: Dockerfile
     depends_on:
-      maven:
+      maven-mirror:
         condition: service_healthy
     environment:
-      - REPOSILITE_URL=http://maven:8080
+      - REPOSILITE_URL=http://maven-mirror:8080
     restart: "no"
 
 volumes:
-  maven-storage:
+  maven-mirror-storage:

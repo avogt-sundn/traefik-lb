@@ -6,8 +6,8 @@ services:
     build:
       dockerfile: Dockerfile
     volumes:
-      - verdaccio-storage:/verdaccio/storage
-      - verdaccio-plugins:/verdaccio/plugins
+      - npm-mirror-storage:/verdaccio/storage
+      - npm-mirror-plugins:/verdaccio/plugins
     environment:
       - NODE_ENV=production
     ports:
@@ -19,5 +19,5 @@ services:
       retries: 1
 
 volumes:
-  verdaccio-storage:
-  verdaccio-plugins:
+  npm-mirror-storage:
+  npm-mirror-plugins:
