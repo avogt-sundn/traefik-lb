@@ -37,7 +37,13 @@ services:
         condition: service_healthy
     environment:
       - REPOSILITE_URL=http://maven-mirror:8080
-    restart: "no"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "http://maven-mirror:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+      start_period: 2s
 
 volumes:
   maven-mirror-storage:
