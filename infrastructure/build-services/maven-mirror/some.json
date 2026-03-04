@@ -54,6 +54,7 @@
                 "mount": "",
                 "maxResourceLockLifetimeInSeconds": 60
             },
+            "storagePolicy": "STRICT",
             "proxied": [
                 {
                     "reference": "https://repo.maven.apache.org/maven2/",
