@@ -56,8 +56,9 @@
             },
             "proxied": [
                 {
-                    "reference": "https://repo1.maven.org/maven2/",
-                    "store": true
+                    "reference": "https://repo.maven.apache.org/maven2/",
+                    "store": true,
+                    "allowedExtensions": [".jar", ".war", ".pom", ".xml", ".module", ".md5", ".sha1", ".sha256", ".sha512", ".asc", ".properties"]
                 }
             ]
         }
