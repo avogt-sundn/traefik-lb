@@ -1,9 +1,24 @@
 ## Stage 1 : build with maven builder image with native capabilities
 FROM quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-21 AS build
 
+
+RUN mkdir -p $HOME/.m2 && cat > $HOME/.m2/settings.xml <<EOF
+
+<settings>
+  <mirrors>
+    <mirror>
+      <id>dockerized-mirror</id>
+      <name>Local Mirror Repository</name>
+      <url>http://localhost:8008/central</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
+EOF
+
 WORKDIR /code
-USER root
-ENV DIR /root/.m2/repository
+
+ENV DIR $HOME/.m2/repository
 COPY  --chmod=0755 mvnw /code/mvnw
 COPY  .mvn /code/.mvn
 COPY pom.xml /code/
