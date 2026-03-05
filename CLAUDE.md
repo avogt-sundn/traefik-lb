@@ -11,8 +11,15 @@ A local/dev load-balancer demo using **Traefik** as the edge proxy in front of t
 A pre-requisite Docker network must exist before bringing up the stack:
 
 ```bash
+make up    # creates network, starts mirrors first, then builds and starts all services
+make down  # docker compose down
+```
+
+Or manually in two steps (build mirrors must be healthy before app images are built):
+```bash
 docker network create docker-default-network
-docker compose up --build -d   # from repo root
+docker compose up --wait maven-mirror bootstrap-maven-mirror npm-mirror
+docker compose up --build -d
 docker compose down
 ```
 
