@@ -15,3 +15,5 @@ cat > $HOME/.m2/settings.xml<<EOF
     </mirrors>
 </settings>
 EOF
+
+echo "Maven mirror is set up"
