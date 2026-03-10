@@ -26,7 +26,8 @@
     7071
   ],
   "mounts": [
-    "source=localcache,target=/home/vscode/.m2,type=volume"
+    "source=localcache,target=/home/vscode/.m2,type=volume",
+    "source=aws-local,target=/home/vscode/.aws,type=volume"
   ],
 "postCreateCommand": ".devcontainer/scripts/postCreateCommand.sh",
   "containerEnv": {
@@ -80,9 +81,9 @@
         "terminal.integrated.profiles.linux": {
           "zsh": {
             "path": "zsh"
-          }
+          },
+          "editor.formatOnSave": true
         }
       }
     }
   }
-}

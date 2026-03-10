@@ -1,7 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-mkdir -p $HOME/.m2 && cat > $HOME/.m2/settings.xml<<EOF
+mkdir -p $HOME/.m2
+sudo chown -R vscode:vscode /home/vscode/.m2
 
+cat > $HOME/.m2/settings.xml<<EOF
 <settings>
     <mirrors>
         <mirror>

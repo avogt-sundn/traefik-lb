@@ -15,4 +15,12 @@ RUN apt update && apt install -y iputils-ping dnsutils file apache2-utils python
 #RUN apt update && apt install -y graphviz
 # END   plantuml extension
 
+# set workspace directory
+WORKDIR /home/vscode
+
+RUN ARCH=$(uname -m) \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install
+
 USER vscode

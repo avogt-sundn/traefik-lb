@@ -62,3 +62,47 @@ mvn -f backend/java-two/pom.xml clean package
 
 ---
 Generated summary: covers layout, start steps, and key files to inspect for deeper details.
+
+
+
+# Claude Code Usage
+
+```bash
+aws sso login --profile bedrock-dev
+#
+# Attempting to open your default browser.
+# If the browser does not open, open the following URL:
+#
+# https://oidc.eu-central-1.amazonaws.com/authorize?...
+#
+./start-claude.sh
+````
+
+
+# Claude Code Setup
+
+Devcontainer setup maps the .aws folder to a docker volume. Setting up AWS sso is only required once or if that volume got deleted.
+
+1. Configure single sign on
+
+```bash
+aws configure sso
+# SSO session name (Recommended): ???-session
+# SSO start URL [None]: https://d-???.awsapps.com/start
+# SSO region [None]: eu-central-1
+# SSO registration scopes [sso:account:access]:
+# Attempting to open your default browser.
+# If the browser does not open, open the following URL:
+#
+# https://oidc.eu-central-1.amazonaws.com/authorize?...
+# The only AWS account available to you is: 88???
+# Using the account ID 88???
+# The only role available to you is: AWS-Bedrock_Dev_Access
+# Using the role name "AWS-Bedrock_Dev_Access"
+# Default client Region [None]: eu-central-1
+# CLI default output format (json if not specified) [None]:
+# Profile name [AWS-Bedrock_Dev_Access-88????]: bedrock-dev
+# To use this profile, specify the profile name using --profile, as shown:
+#
+# aws sts get-caller-identity --profile bedrock-dev
+```
