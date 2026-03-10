@@ -12,7 +12,7 @@ export class ApiParameterValidators {
     return [
       Validators.maxLength(10),
       Validators.pattern("^[A-Za-z0-9*]*$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Application number
@@ -20,7 +20,7 @@ export class ApiParameterValidators {
   static applicationNumberValidators(): ValidatorFn[] {
     return [
       Validators.min(1)
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Partner number
@@ -28,7 +28,7 @@ export class ApiParameterValidators {
   static partnerNumberValidators(): ValidatorFn[] {
     return [
       Validators.min(3)
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * First name of contract holder (2-35 characters). Use * for wildcard search
@@ -38,7 +38,7 @@ export class ApiParameterValidators {
       Validators.minLength(2),
       Validators.maxLength(35),
       Validators.pattern("^[A-Za-zÄÖÜäöüßÉÈÊËéèêëÀÁÂÃÅÆÇÎÏÌÍÔÖØÙÚÛÜÝŸÑñ' *-]*$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Last name of contract holder (2-35 characters). Use * for wildcard search
@@ -48,15 +48,13 @@ export class ApiParameterValidators {
       Validators.minLength(2),
       Validators.maxLength(35),
       Validators.pattern("^[A-Za-zÄÖÜäöüßÉÈÊËéèêëÀÁÂÃÅÆÇÎÏÌÍÔÖØÙÚÛÜÝŸÑñ' *-]*$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Date of birth of contract holder
    */
   static dateOfBirthValidators(): ValidatorFn[] {
-    return [
-      // No validators needed
-    ].filter(v => v !== undefined);
+    return [];
   }
   /**
    * Postal code. Use * for wildcard search
@@ -65,7 +63,7 @@ export class ApiParameterValidators {
     return [
       Validators.maxLength(5),
       Validators.pattern("^[0-9*]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * City name (2-35 characters). Use * for wildcard search
@@ -75,7 +73,7 @@ export class ApiParameterValidators {
       Validators.minLength(2),
       Validators.maxLength(35),
       Validators.pattern("^[A-Za-zÄÖÜäöüßÉÈÊËéèêëÀÁÂÃÅÆÇÎÏÌÍÔÖØÙÚÛÜÝŸÑñàáâãåæçìíîïôöøùúûüýÿ' .*-]*$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Vehicle license plate number. Use * for wildcard search
@@ -85,7 +83,7 @@ export class ApiParameterValidators {
       Validators.minLength(1),
       Validators.maxLength(15),
       Validators.pattern("^[A-ZÄÖÜ0-9\\s\\-*]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Client identifier for multi-tenant scenarios
@@ -96,7 +94,7 @@ export class ApiParameterValidators {
       Validators.minLength(1),
       Validators.maxLength(10),
       Validators.pattern("^[A-Z0-9]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
 
   /**

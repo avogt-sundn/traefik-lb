@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO FIT-218: fix linting error
 import {Injectable} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DtoValidator} from '@shared/services/form-field-validation.service';
@@ -13,7 +12,6 @@ import {
 } from '../validators/generated';
 import {DtoValidationError} from 'projects/shared/services/validation-error.service';
 
-// Assisted by AI
 @Injectable({
   providedIn: 'root',
 })
@@ -69,28 +67,10 @@ export class PartnerFieldValidationService {
     dtoKey: string,
   ): DtoValidator {
     return (fieldName: string, value: any): string | DtoValidationError | null => {
-      // Check for empty required fields first
-      if (value === null || value === undefined || value === '') {
-        // Create a minimal DTO to test if this field is required
-        const testDto: any = {[fieldName]: value};
-        const testControl = new FormControl(testDto);
-        const validationResult = validatorFunction(testControl);
-
-        // If there's a required error for this field, return it
-        if (validationResult?.[dtoKey]?.[fieldName]) {
-          return validationResult[dtoKey][fieldName];
-        }
-      } else {
-        // For non-empty values, validate pattern/length constraints
-        const testDto: any = {[fieldName]: value};
-        const testControl = new FormControl(testDto);
-        const validationResult = validatorFunction(testControl);
-
-        if (validationResult?.[dtoKey]?.[fieldName]) {
-          return validationResult[dtoKey][fieldName];
-        }
-      }
-      return null;
+      const testDto: any = {[fieldName]: value};
+      const testControl = new FormControl(testDto);
+      const validationResult = validatorFunction(testControl);
+      return validationResult?.[dtoKey]?.[fieldName] ?? null;
     }
   }
 }

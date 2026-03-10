@@ -7,7 +7,6 @@ import {
   SnackbarType,
 } from 'projects/shared/components/basic/snackbar/snackbar.component';
 
-// Assisted by AI
 export function showSnackbar() {
   const snackBar = inject(MatSnackBar);
   const transloco = inject(TranslocoService);

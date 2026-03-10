@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {RouterLink} from '@angular/router';
 import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'shell-footer',
   imports: [
     MatIconModule,
-    MatCheckboxModule,
+    RouterLink,
     TranslocoPipe,
   ],
   templateUrl: './footer.html',

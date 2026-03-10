@@ -1,6 +1,5 @@
 import {Component, input, InputSignal} from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
-import {CommonModule} from '@angular/common';
 import {ContractSearchDto} from '../../../../api';
 import {TranslocoPipe} from '@jsverse/transloco';
 
@@ -12,7 +11,6 @@ interface TableColumn {
 @Component({
   selector: 'loans-search-loan-result-table',
   imports: [
-    CommonModule,
     MatTableModule,
     TranslocoPipe,
   ],

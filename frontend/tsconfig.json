@@ -17,12 +17,6 @@
     "declaration": false,
     "useDefineForClassFields": true,
     "forceConsistentCasingInFileNames": true,
-    // optional: debugging in TypeScript
-    // "sourceMap": true,
-    // optional: Find Unused
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "emitDecoratorMetadata": true,
     "baseUrl": "./",
     "lib": [
       "ES2022",
@@ -57,6 +51,7 @@
   },
   "exclude": [
     "dist",
+    "projects/*/federation.config.js",
   ],
   "files": [],
   "references": [

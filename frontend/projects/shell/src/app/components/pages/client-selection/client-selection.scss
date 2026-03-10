@@ -10,6 +10,7 @@
 
 mat-toolbar {
   background: none;
+  color: var(--core-finance-primary);
 }
 
 .title {
@@ -45,10 +46,6 @@ mat-toolbar {
   object-fit: contain;
   margin: 0 auto;
   display: block;
-}
-
-mat-toolbar {
-  color: var(--core-finance-primary);
 }
 
 .centered-toolbar {

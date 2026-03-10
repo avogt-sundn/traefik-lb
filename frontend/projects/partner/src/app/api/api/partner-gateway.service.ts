@@ -7,35 +7,23 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-/* tslint:disable:no-unused-variable member-ordering */
-
 import {Inject, Injectable, Optional} from '@angular/core';
 import {HttpClient, HttpContext, HttpEvent, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-// @ts-ignore
 import {GroupListResponse} from '../model/group-list-response';
-// @ts-ignore
 import {GroupMembersResponse} from '../model/group-members-response';
-// @ts-ignore
 import {IbanValidationResultDto} from '../model/iban-validation-result-dto';
-// @ts-ignore
 import {PartnerDto} from '../model/partner-dto';
-// @ts-ignore
 import {PartnerGroupSearchResponse} from '../model/partner-group-search-response';
-// @ts-ignore
 import {PartnerSummaryDto} from '../model/partner-summary-dto';
-// @ts-ignore
 import {PostalCodeAreaFocusDto} from '../model/postal-code-area-focus-dto';
-// @ts-ignore
 import {SalesAreaDataResponse} from '../model/sales-area-data-response';
 
-// @ts-ignore
-import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
+import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
 import {BaseService} from '../api.base.service';
 import {PartnerGatewayServiceInterface} from './partner-gateway.serviceInterface';
-
 
 @Injectable({
   providedIn: 'root'

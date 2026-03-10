@@ -14,7 +14,7 @@ export class ApiParameterValidators {
       Validators.minLength(15),
       Validators.maxLength(34),
       Validators.pattern("^[A-Za-z0-9\\s]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Partner number for exact match search
@@ -24,7 +24,7 @@ export class ApiParameterValidators {
       Validators.minLength(3),
       Validators.maxLength(20),
       Validators.pattern("^[0-9]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Alpha code (3-10 characters). Use * for wildcard search
@@ -34,7 +34,7 @@ export class ApiParameterValidators {
       Validators.minLength(3),
       Validators.maxLength(10),
       Validators.pattern("^[A-Za-z0-9*]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Partner name for partial search in name fields 1-3 (3-35 characters)
@@ -44,7 +44,7 @@ export class ApiParameterValidators {
       Validators.minLength(3),
       Validators.maxLength(35),
       Validators.pattern("^[A-Za-zÄÖÜäöüß0-9\\s.\\-+&]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Postcode (3-5 characters). Use * for wildcard search
@@ -54,7 +54,7 @@ export class ApiParameterValidators {
       Validators.minLength(3),
       Validators.maxLength(5),
       Validators.pattern("^[0-9*]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * City (2-35 characters). Use * for wildcard search
@@ -64,7 +64,7 @@ export class ApiParameterValidators {
       Validators.minLength(2),
       Validators.maxLength(35),
       Validators.pattern("^[A-Za-zÄÖÜäöüß\\s.\\-*]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Street (3-35 characters). Use * for wildcard search
@@ -74,7 +74,7 @@ export class ApiParameterValidators {
       Validators.minLength(3),
       Validators.maxLength(35),
       Validators.pattern("^[A-Za-zÄÖÜäöüß0-9\\s.\\-*]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
   /**
    * Group number to find members for
@@ -85,7 +85,7 @@ export class ApiParameterValidators {
       Validators.minLength(1),
       Validators.maxLength(20),
       Validators.pattern("^[0-9]+$")
-    ].filter(v => v !== undefined);
+    ];
   }
 
   /**

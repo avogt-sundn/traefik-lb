@@ -27,10 +27,8 @@ export * from "./directives/error-message";
 export * from "./validators/global-validators";
 export * from "./validators/validator.constants";
 
-export * from "./util/date.util";
-export * from "./util/phone.util";
-export * from "./util/signal-http.util";
-export * from "./util/transloco.util";
+export * from "./util/date";
+export * from "./util/phone";
 export * from "./util/enum/roles.enum";
 export * from "./util/handler/maintenance-error.handler";
 export * from "./util/operator/start-with-tap";

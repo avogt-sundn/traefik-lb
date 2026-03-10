@@ -8,7 +8,6 @@ export interface SaveValidationResult {
   errors: Record<string, string>;
 }
 
-// Assisted by AI
 @Injectable({
   providedIn: 'root',
 })
@@ -24,7 +23,6 @@ export class PartnerSaveValidationService {
 
     const errors: Record<string, string> = {};
 
-    // Extract all validation errors (including nested DTOs)
     if (validationResult) {
       this.extractErrors(validationResult, '', errors);
     }
@@ -48,10 +46,8 @@ export class PartnerSaveValidationService {
       const currentPath = path ? `${path}.${key}` : key;
 
       if (typeof value === 'string') {
-        // This is an error message
         errors[currentPath] = value;
       } else if (typeof value === 'object') {
-        // Recursively process nested objects/arrays
         this.extractErrors(value, currentPath, errors);
       }
     });

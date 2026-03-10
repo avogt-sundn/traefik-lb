@@ -7,8 +7,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-/* tslint:disable:no-unused-variable member-ordering */
-
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent, HttpParameterCodec, HttpContext 
@@ -16,24 +14,17 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-// @ts-ignore
-import { ContractRequestDto } from '../model/contract-request-dto';
-// @ts-ignore
+import { ContractDto } from '../model/contract-dto';
 import { ContractSearchDto } from '../model/contract-search-dto';
-// @ts-ignore
 import { ContractSearchResponse } from '../model/contract-search-response';
-// @ts-ignore
 import { CreateContractResponseDto } from '../model/create-contract-response-dto';
 
-// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { BaseService } from '../api.base.service';
 import {
     LoanGatewayServiceInterface
 } from './loan-gateway.serviceInterface';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -51,10 +42,10 @@ export class LoanGatewayService extends BaseService implements LoanGatewayServic
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createContract(contractRequestDto: ContractRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CreateContractResponseDto>;
-    public createContract(contractRequestDto: ContractRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CreateContractResponseDto>>;
-    public createContract(contractRequestDto: ContractRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CreateContractResponseDto>>;
-    public createContract(contractRequestDto: ContractRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public createContract(contractRequestDto: ContractDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CreateContractResponseDto>;
+    public createContract(contractRequestDto: ContractDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CreateContractResponseDto>>;
+    public createContract(contractRequestDto: ContractDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CreateContractResponseDto>>;
+    public createContract(contractRequestDto: ContractDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (contractRequestDto === null || contractRequestDto === undefined) {
             throw new Error('Required parameter contractRequestDto was null or undefined when calling createContract.');
         }

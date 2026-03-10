@@ -12,7 +12,7 @@ export class SearchLoanService {
     try {
       return await firstValueFrom(
         this.loanGatewayService.searchContracts(
-          "BDK", //TODO FIT-574: aktuell gewählten Mandant übergeben
+          "BDK", // TODO: pass currently selected client (FIT-574)
           searchCriteria.contractNumber,
           searchCriteria.applicationNumber,
           searchCriteria.partnerNumber,
