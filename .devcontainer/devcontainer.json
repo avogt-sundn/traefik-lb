@@ -7,6 +7,7 @@
     "dockerfile": "Dockerfile"
   },
   "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers-community/npm-features/prettier:1": {},
     "ghcr.io/devcontainers-extra/features/curl-apt-get:1": {},
     "ghcr.io/devcontainers-extra/features/json-server:1": {},
