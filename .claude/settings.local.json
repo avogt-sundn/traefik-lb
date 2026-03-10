@@ -4,7 +4,11 @@
       "Bash(docker compose:*)",
       "Bash(curl:*)",
       "Bash(docker exec:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(cd /workspaces/traefik-lb/frontend && npm run build:all 2>&1)",
+      "Bash(npm run:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
