@@ -8,7 +8,8 @@
       "Bash(cd /workspaces/traefik-lb/frontend && npm run build:all 2>&1)",
       "Bash(npm run:*)",
       "Bash(git push:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git add:*)"
     ]
   }
 }
