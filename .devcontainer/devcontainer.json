@@ -75,7 +75,8 @@
         "myml.vscode-markdown-plantuml-preview",
         "vscjava.vscode-java-test",
         "redhat.java",
-        "vstirbu.vscode-mermaid-preview"
+        "vstirbu.vscode-mermaid-preview",
+        "Continue.continue"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
