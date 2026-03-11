@@ -31,7 +31,6 @@ public class HelloControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
-
                 .build();
     }
 
