@@ -68,7 +68,7 @@ Use the appropriate multi-stage pattern with build mirror config:
 
 ### 3. Root `docker-compose.yaml` include line
 
-Show the exact line to add to `/workspaces/traefik-lb/docker-compose.yaml` under `include:`:
+Show the exact line to add to the root `docker-compose.yaml` under `include:`:
 
 ```yaml
   - <service-dir>/docker-compose.yaml

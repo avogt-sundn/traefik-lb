@@ -36,7 +36,7 @@ The DevContainer (`/.devcontainer/devcontainer.json`) runs as a container on the
 **Key points**:
 - `initializeCommand` runs **on the host** before the container starts — creates the Docker network if it doesn't exist
 - `--network=docker-default-network` makes the DevContainer a first-class member of the Compose network
-- `--hostname=${localWorkspaceFolderBasename}` sets the DevContainer hostname to the project folder name (e.g., `traefik-lb`) — this is the `TARGET_HOST` used by forward containers
+- `--hostname=${localWorkspaceFolderBasename}` sets the DevContainer hostname to the project folder name (e.g., `my-project`) — this is the `TARGET_HOST` used by forward containers
 - Volume mounts for `.m2` and `.aws` persist build cache and credentials across container rebuilds
 
 ## Core Responsibilities
@@ -68,10 +68,10 @@ The DevContainer's hostname must match the `TARGET_HOST` in forward container en
 ```yaml
 # forward-devcontainer/docker-compose.yaml
 environment:
-  - TARGET_HOST=traefik-lb   # Must match DevContainer hostname
+  - TARGET_HOST=<project-name>  # Must match DevContainer hostname (${localWorkspaceFolderBasename})
 ```
 
-`${localWorkspaceFolderBasename}` expands to the folder name of the opened workspace (e.g., `traefik-lb` if the project is in `/workspaces/traefik-lb`). If the project is renamed or moved, this value changes — update `TARGET_HOST` in all forward container `docker-compose.yaml` files accordingly.
+`${localWorkspaceFolderBasename}` expands to the folder name of the opened workspace (e.g., `my-project` if the project is in `/workspaces/my-project`). If the project is renamed or moved, this value changes — update `TARGET_HOST` in all forward container `docker-compose.yaml` files accordingly.
 
 ### 3. Volume Mounts for Build Caching
 
@@ -140,7 +140,7 @@ exec socat TCP-LISTEN:${LISTEN_PORT},fork,reuseaddr TCP:${TARGET_HOST}:${TARGET_
 ```
 
 When a dev server (e.g., `ng serve --port 4202`) runs in the DevContainer:
-1. The forward container proxies `forward-partner:4202` → `traefik-lb:4202` (DevContainer)
+1. The forward container proxies `forward-partner:4202` → `<project-name>:4202` (DevContainer)
 2. The forward container's Traefik labels register at priority 1020 (higher than packaged container's 120)
 3. The forward container's Docker healthcheck polls `http://localhost:4202/`
 4. When the dev server stops, the healthcheck fails → Traefik automatically falls back to the packaged container
@@ -161,7 +161,7 @@ forward-myservice:
     - "traefik.http.routers.forward-myservice.priority=<PRODUCTION_PRIORITY + 100>"
   environment:
     - LISTEN_PORT=<PORT>
-    - TARGET_HOST=traefik-lb
+    - TARGET_HOST=<project-name>  # matches --hostname=${localWorkspaceFolderBasename} in devcontainer.json
     - TARGET_PORT=<PORT>
   restart: unless-stopped
   healthcheck:
@@ -203,7 +203,7 @@ forward-myservice:
 
 # Persistent Agent Memory
 
-You have a persistent Persistent Agent Memory directory at `/workspaces/traefik-lb/.claude/agent-memory/devcontainer-integrator/`. Its contents persist across conversations.
+You have a persistent Persistent Agent Memory directory at `.claude/agent-memory/devcontainer-integrator/` (relative to the project root). Its contents persist across conversations.
 
 As you work, consult your memory files to build on previous experience. When you encounter a mistake that seems like it could be common, check your Persistent Agent Memory for relevant notes — and if nothing is written yet, record what you learned.
 

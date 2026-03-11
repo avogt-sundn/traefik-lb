@@ -139,7 +139,7 @@ services:
       - "traefik.http.routers.forward-partner.priority=1020"
     environment:
       - LISTEN_PORT=4202
-      - TARGET_HOST=traefik-lb   # DevContainer hostname (matches --hostname in devcontainer.json)
+      - TARGET_HOST=<project-name>  # DevContainer hostname (matches --hostname=${localWorkspaceFolderBasename} in devcontainer.json)
       - TARGET_PORT=4202
     restart: unless-stopped
     healthcheck:
@@ -217,7 +217,7 @@ If Traefik is not routing to a service:
 
 # Persistent Agent Memory
 
-You have a persistent Persistent Agent Memory directory at `/workspaces/traefik-lb/.claude/agent-memory/traefik-routing-expert/`. Its contents persist across conversations.
+You have a persistent Persistent Agent Memory directory at `.claude/agent-memory/traefik-routing-expert/` (relative to the project root). Its contents persist across conversations.
 
 As you work, consult your memory files to build on previous experience. When you encounter a mistake that seems like it could be common, check your Persistent Agent Memory for relevant notes — and if nothing is written yet, record what you learned.
 
